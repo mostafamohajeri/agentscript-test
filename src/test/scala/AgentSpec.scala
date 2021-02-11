@@ -23,5 +23,13 @@ class AgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
     }
   }
 
+  "A greeter agent" should {
+    "say greetings in response to a hi" in {
+      val prob = testKit.createTestProbe[IMessage]()
+      YellowPages.agents("greeter") ! GoalMessage(StructTerm("hi"),prob.ref)
+      assert(prob.receiveMessage().asInstanceOf[GoalMessage].p_belief.toString  equals  "greetings")
+    }
+  }
+
   override def afterAll(): Unit = testKit.shutdownTestKit()
 }
