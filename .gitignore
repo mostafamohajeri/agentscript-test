@@ -75,6 +75,7 @@ fabric.properties
 
 dist/*
 target/
+!target/scala-2.13/src_managed
 lib_managed/
 src_managed/
 project/boot/
