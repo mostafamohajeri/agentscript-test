@@ -19,3 +19,9 @@ jobs:
         java-version: 11
     - name: Run tests
       run: sbt test
+    - name: Jacoco
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: |
+          export CI_BRANCH="${GITHUB_REF#refs/heads/}"
+          sbt clean jacoco jacocoCoveralls
