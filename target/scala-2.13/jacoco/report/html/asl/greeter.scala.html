@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>greeter.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">asl</a> &gt; <span class="el_source">greeter.scala</span></div><h1>greeter.scala</h1><pre class="source lang-java linenums">
+            package asl
+
+            import _root_.scala.collection.mutable.HashMap
+
+ import _root_.akka.actor.typed.{ActorRef, Behavior, SupervisorStrategy}
+ import _root_.akka.actor.typed.scaladsl.{ActorContext, Behaviors, Routers}
+
+ import _root_.scala.util.Failure
+ import _root_.scala.util.Success
+ import _root_.akka.util.Timeout
+ import _root_.scala.concurrent.duration._
+ import _root_.akka.actor.typed.scaladsl.AskPattern._
+ import _root_.scala.language.implicitConversions
+ import _root_.scala.concurrent.{Await, Future}
+ import _root_.scala.jdk.CollectionConverters._
+ import std.coms._
+ import std.converters._
+
+ import scala.util.Random
+ import bb._
+ import infrastructure._
+ import bb.expstyla.exp._
+
+<span class="nc" id="L25"> object greeter {</span>
+
+<span class="fc" id="L27"> object Intention {</span>
+
+<span class="fc" id="L29">       def apply(p_executionContext: ExecutionContext): Behavior[ISubGoalMessage] = Behaviors.setup { context =&gt;</span>
+
+
+         Behaviors.receive {
+         (context, message) =&gt;
+
+         implicit val executionContext = p_executionContext.copy(intention = context,sender = Sender(message.c_sender_name,message.c_sender))
+
+         message match {
+            case SubGoalMessage(_,_,r) =&gt;
+               message.goal match {
+
+               case greeter.hello =&gt;
+                    greeter.hello.execute(message.params.asInstanceOf[greeter.hello.Parameters])
+
+
+       case _ =&gt;
+           context.log.error(&quot;This actor can not handle goal of type {}&quot;, message.goal)
+         }
+           r ! IntentionDoneMessage(Option(executionContext.name),Option(executionContext.agent.self))
+                         Behaviors.same
+         case InitEndMessage(r) =&gt;
+             Behaviors.stopped
+       }
+      }
+     }
+     }
+
+<span class="fc" id="L57"> object Agent extends IAgent {</span>
+
+<span class="fc" id="L59">         override def agent_type: String = &quot;greeter&quot;</span>
+
+<span class="pc" id="L61">         var vars = VarMap()</span>
+
+<span class="fc" id="L63">         def initGoals()(implicit executionContext: ExecutionContext) = List[StructTerm](</span>
+         )
+
+<span class="fc" id="L66">         def initBeliefs()(implicit executionContext: ExecutionContext) = List[StructTerm](</span>
+         )
+
+         def create_goal_message(t: StructTerm,ref:ActorRef[IMessage]) : Option[SubGoalMessage] = {
+<span class="pc bpc" id="L70" title="5 of 8 branches missed.">             if(t.functor==&quot;hello&quot; &amp;&amp; t.terms.size == 0 ) {</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">                                                        val args : hello.Parameters = if(t.terms.size == 0)  hello.Parameters(List( )) else hello.Parameters(t.terms.toList)</span>
+<span class="fc" id="L72">                                                         Option(SubGoalMessage(hello, args,ref))</span>
+                                                    } else  {
+<span class="nc" id="L74">                                             println(&quot;no plan for this goal: &quot; + t.toString)</span>
+<span class="nc" id="L75">                                             ref ! IntentionErrorMessage(NoPlanMessage())</span>
+<span class="pc" id="L76">                                             Option.empty[SubGoalMessage]</span>
+                                             }
+         }
+
+         def apply(name: String,yellowPages: ActorRef[IMessage],MAS: ActorRef[IMessage]): Behavior[IMessage] = {
+<span class="fc" id="L81">               Behaviors.setup { context =&gt;</span>
+                 val yp : ActorRef[IMessage] = yellowPages
+                 val bb : BeliefBaseStyla = BeliefBaseFactory()
+                 val logger = AgentLogger()
+                 implicit val executionContext : ExecutionContext = ExecutionContext(name,agent_type,context,yp,bb,logger)
+                 bb.assert(initBeliefs)
+
+                 val initiator = context.spawn(Intention(executionContext),&quot;initiator&quot;)
+
+                 MAS ! ReadyMessage(context.self)
+                 Behaviors.receive {
+                   (context, message) =&gt; message match {
+                     case StartMessage() =&gt;
+                       logger.start()
+
+               implicit val timeout: Timeout = 99999.seconds
+                             implicit val ec = context.executionContext
+                             implicit val scheduler = context.system.scheduler
+
+
+               //              initGoals.foreach( tuple =&gt; initiator ! SubGoalMessage(tuple._1,tuple._2,context.self))
+                             initGoals.foreach(struct =&gt; {
+
+
+                                  val result: Future[IMessage] =  initiator.ask[IMessage](ref =&gt; {
+                                    val subGoal = create_goal_message(struct,ref)
+                                       if(subGoal.isDefined)
+                                         subGoal.get
+                                         else
+                                          throw new RuntimeException(s&quot;No plan for initial goal $struct&quot;)
+                                     }
+                                  )
+
+
+                               result.onComplete {
+                                    case Success(IntentionDoneMessage(n, r)) =&gt; IntentionDoneMessage(n,r)
+                                    case Failure(_) =&gt; IntentionErrorMessage()
+                               }
+
+                               Await.result(result,timeout.duration)
+
+               //                context.ask[ISubGoalMessage, IMessage](initiator, ref =&gt; SubGoalMessage(tuple._1, tuple._2,name, ref)) {
+               //                  case Success(IntentionDoneMessage(_, _)) =&gt; IntentionDoneMessage()
+               //                  case Failure(_) =&gt; IntentionErrorMessage()
+               //                }
+                             }
+                             )
+
+               initiator ! InitEndMessage(context.self)
+               normal_behavior()
+
+ //            case InitEndMessage(_) =&gt;
+ //              context.log.debug(f&quot;$name: I have started, switching behavior&quot;)
+ //              normal_behavior()
+                   }
+
+                 }
+               }
+             }
+
+         def normal_behavior() (implicit executionContext: ExecutionContext): Behavior[IMessage] = {
+<span class="fc" id="L142">               Behaviors.setup { context =&gt;</span>
+
+                 val pool = Routers.pool(poolSize = 8)(
+                   Behaviors.supervise(Intention(executionContext)).onFailure[Exception](SupervisorStrategy.restart))
+
+                 val router = context.spawn(pool, &quot;intention-pool&quot;)
+
+                 Behaviors.receive {
+                   (context, message) =&gt; message match {
+                     case IntentionDoneMessage(s,r) =&gt;
+                       //context.log.debug(f&quot;${executionContext.name}: an intention was done by $s&quot;)
+                     case SubGoalMessage(_, _,_) =&gt;
+                       router ! message.asInstanceOf[SubGoalMessage]
+                     case GoalMessage(m,ref) =&gt;
+                       m match {
+                         case t: StructTerm =&gt;
+                           val subGoal = create_goal_message(t,ref)
+
+                           if(subGoal.isDefined)
+                               context.self ! subGoal.get
+
+
+                          }
+                   }
+                     Behaviors.same
+                 }
+               }
+             }
+     }
+
+<span class="fc" id="L172">      object hello extends IGoal {</span>
+<span class="pc bnc" id="L173" title="All 22 branches missed.">         case class Parameters(l_params: List[GenericTerm]) extends IParams {}</span>
+
+        def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
+<span class="fc" id="L176">         var vars = VarMap()</span>
+                 //plan 0 start
+
+<span class="fc" id="L179">                         vars.clear()</span>
+<span class="fc" id="L180">                         val m0 = executionContext.beliefBase.matchTerms(/* StructTerm(&quot;hello&quot;,Seq[GenericTerm]()) All vars no need to check */);</span>
+
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">                        if(m0.result)</span>
+                         {
+<span class="fc" id="L184">                         m0.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
+
+<span class="fc" id="L186">                         val r0 = executionContext.beliefBase.query()</span>
+
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">                         if (r0.result) {</span>
+<span class="fc" id="L189">                             r0.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
+<span class="fc" id="L190">                             plan0(vars)</span>
+<span class="fc" id="L191">                             return</span>
+                         }
+
+                          }
+                          // plan 0
+                 //plan 1 start
+
+<span class="nc" id="L198">                         vars.clear()</span>
+<span class="nc" id="L199">                         val m1 = executionContext.beliefBase.matchTerms(/* StructTerm(&quot;hello&quot;,Seq[GenericTerm]()) All vars no need to check */);</span>
+
+<span class="nc bnc" id="L201" title="All 2 branches missed.">                        if(m1.result)</span>
+                         {
+<span class="nc" id="L203">                         m1.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
+
+<span class="nc" id="L205">                         val r1 = executionContext.beliefBase.query()</span>
+
+<span class="nc bnc" id="L207" title="All 2 branches missed.">                         if (r1.result) {</span>
+<span class="nc" id="L208">                             r1.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
+<span class="nc" id="L209">                             plan1(vars)</span>
+<span class="nc" id="L210">                             return</span>
+                         }
+
+                          }
+                          // plan 1
+
+
+<span class="nc" id="L217">             executionContext.sender.ref() ! IntentionErrorMessage(NoApplicablePlanMessage())</span>
+
+        }
+
+
+                      def plan0(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
+
+<span class="fc" id="L224">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.sender.ref,StructTerm(&quot;greetings&quot;,Seq[GenericTerm]()))))</span>
+
+
+                     }
+                      def plan1(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
+
+<span class="nc" id="L230">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.sender.ref,StructTerm(&quot;ssssss&quot;,Seq[GenericTerm]()))))</span>
+
+
+                     }
+
+
+      }
+
+
+
+<span class="nc" id="L240">    def myName() (implicit executionContext: ExecutionContext) : String = executionContext.name</span>
+
+ }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
