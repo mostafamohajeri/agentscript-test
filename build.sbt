@@ -27,10 +27,10 @@ resolvers += Resolver.bintrayRepo("uva-cci","styla-prolog")
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
 
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.2"
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.2"
-libraryDependencies += "nl.uva.sne.cci" % "parser" % "0.2.11"
-libraryDependencies += "nl.uva.sne.cci" % "scala-generator" % "0.2.11"
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.4"
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.4"
+libraryDependencies += "nl.uva.sne.cci" % "parser" % "0.2.13"
+libraryDependencies += "nl.uva.sne.cci" % "scala-generator" % "0.2.13"
 libraryDependencies += "nl.uva.sne.cci" %% "stylaport" % "0.1.2"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.3" % Test
