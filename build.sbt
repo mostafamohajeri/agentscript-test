@@ -27,10 +27,10 @@ resolvers += Resolver.bintrayRepo("uva-cci","styla-prolog")
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
 
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.4"
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.4"
-libraryDependencies += "nl.uva.sne.cci" % "parser" % "0.2.13"
-libraryDependencies += "nl.uva.sne.cci" % "scala-generator" % "0.2.13"
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.15"
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.15"
+//libraryDependencies += "nl.uva.sne.cci" % "parser" % "0.2.14.SNAP3"
+//libraryDependencies += "nl.uva.sne.cci" % "scala-generator" % "0.2.14.SNAP3"
 libraryDependencies += "nl.uva.sne.cci" %% "stylaport" % "0.1.2"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.3" % Test
@@ -42,7 +42,9 @@ enablePlugins(AgentScriptCCPlugin)
 
 (agentScriptCC / agentScriptCCPath) in Compile := (baseDirectory.value / "src" / "test" / "asl")
  Compile / sourceGenerators += (Compile / agentScriptCC).taskValue
- 
+
+parallelExecution in Test := false
+
 jacocoReportSettings := JacocoReportSettings(
   "Jacoco Coverage Report",
   None,
@@ -50,10 +52,3 @@ jacocoReportSettings := JacocoReportSettings(
   Seq(JacocoReportFormats.ScalaHTML, JacocoReportFormats.XML),
   "utf-8")
 
-// lazy val root = (project in file("."))
-//   .settings(
-//     jacocoCoverallsServiceName := "github-actions", 
-//     jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
-//     jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
-//     jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN")
-//   )

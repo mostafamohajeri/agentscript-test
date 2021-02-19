@@ -22,7 +22,7 @@
  import infrastructure._
  import bb.expstyla.exp._
 
- object greeter {
+ object greeter_simple {
 
  object Intention {
 
@@ -37,11 +37,8 @@
             case SubGoalMessage(_,_,r) =>
                message.goal match {
 
-                   case greeter.hello =>
-                     greeter.hello.execute(message.params.asInstanceOf[Parameters])
-
-                   case greeter.hi =>
-                     greeter.hi.execute(message.params.asInstanceOf[Parameters])
+                   case greeter_simple.receive =>
+                     greeter_simple.receive.execute(message.params.asInstanceOf[Parameters])
 
 
            case _ =>
@@ -64,7 +61,7 @@
 
  object Agent extends IAgent {
 
-         override def agent_type: String = "greeter"
+         override def agent_type: String = "greeter_simple"
 
          var vars = VarMap()
 
@@ -75,13 +72,9 @@
          )
 
          def create_goal_message(t: StructTerm, ref: IMessageSource) (implicit executionContext: ExecutionContext): Option[SubGoalMessage] = {
-                     if(t.functor=="hello" && t.terms.size == 1 ) {
+                     if(t.functor=="receive" && t.terms.size == 1 ) {
                        val args: Parameters = Parameters(t.terms.toList)
-                       Option(SubGoalMessage(hello, args, ref))
-                     } else 
-                     if(t.functor=="hi" && t.terms.size == 0 ) {
-                       val args: Parameters = Parameters(t.terms.toList)
-                       Option(SubGoalMessage(hi, args, ref))
+                       Option(SubGoalMessage(receive, args, ref))
                      } else  {
              Option.empty[SubGoalMessage]
              }
@@ -183,99 +176,17 @@
      }
    }
 
-      object hello extends IGoal {
+      object receive extends IGoal {
 
         def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
          var vars = VarMap()
                  //plan 0 start
 
                          vars.clear()
-                         vars +=(   "Name" -> params.l_params(0))
+                         vars +=(   "M" -> params.l_params(0))
 
 
-                         val r0 = executionContext.beliefBase.query(StructTerm("==",Seq[GenericTerm](asString(vars("Name")).contains(StringTerm("Mr")),BooleanTerm(true))))
-
-                         if (r0.result) {
-                             r0.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
-                             plan0(vars)
-                             return
-                         }
-
-                          // plan 0 end
-                 //plan 1 start
-
-                         vars.clear()
-                         vars +=(   "Name" -> params.l_params(0))
-
-
-                         val r1 = executionContext.beliefBase.query(StructTerm(";",Seq[GenericTerm](StructTerm("==",Seq[GenericTerm](asString(vars("Name")).contains(StringTerm("Ms")),BooleanTerm(true))),asString(vars("Name")).contains(StringTerm("Mrs")))))
-
-                         if (r1.result) {
-                             r1.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
-                             plan1(vars)
-                             return
-                         }
-
-                          // plan 1 end
-                 //plan 2 start
-
-                         vars.clear()
-                         vars +=( "0" -> params.l_params(0))
-
-                         val m2 = executionContext.beliefBase.matchTerms(StructTerm("hello",Seq[GenericTerm](StringTerm("John"))),StructTerm("hello",params.l_params));
-                         if(m2.result)
-                         {
-                          m2.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
-
-
-                         val r2 = executionContext.beliefBase.query()
-
-                         if (r2.result) {
-                             r2.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
-                             plan2(vars)
-                             return
-                         }
-
-                          }
-                          // plan 2 end
-
-
-             executionContext.src.asInstanceOf[AkkaMessageSource].address() ! IntentionErrorMessage(NoApplicablePlanMessage(),AkkaMessageSource(executionContext.agent.self))
-
-        }
-
-
-                      def plan0(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
-
-                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() => achieve(executionContext.src,StructTerm("greetings",Seq[GenericTerm](StringTerm("Sir"))))))
-
-
-                     }
-                      def plan1(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
-
-                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() => achieve(executionContext.src,StructTerm("greetings",Seq[GenericTerm](StringTerm("Madam"))))))
-
-
-                     }
-                      def plan2(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
-
-                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() => achieve(executionContext.src,StructTerm("greetings",Seq[GenericTerm](StringTerm("John"))))))
-
-
-                     }
-
-
-      }
-
-      object hi extends IGoal {
-
-        def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
-         var vars = VarMap()
-                 //plan 0 start
-
-                         vars.clear()
-
-                         val r0 = executionContext.beliefBase.query()
+                         val r0 = executionContext.beliefBase.query(StructTerm(";",Seq[GenericTerm](StructTerm("==",Seq[GenericTerm](vars("M"),StringTerm("Hi"))),StructTerm("==",Seq[GenericTerm](vars("M"),StringTerm("Hello"))))))
 
                          if (r0.result) {
                              r0.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }

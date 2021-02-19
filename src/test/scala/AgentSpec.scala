@@ -30,16 +30,24 @@ class AgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
       assert(prob.receiveMessage().asInstanceOf[GoalMessage].content.toString  equals  "greetings(Madam)")
     }
 
+    "say greetings(John) in response to a hello when needed" in {
+      val prob = testKit.createTestProbe[IMessage]()
+      YellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("John"))),AkkaMessageSource(prob.ref))
+      assert(prob.receiveMessage().asInstanceOf[GoalMessage].content.toString  equals  "greetings(John)")
+    }
+
     "respond if there are no applicable plans for a goal" in {
       val prob = testKit.createTestProbe[IMessage]()
       YellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("Charlie"))),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().isInstanceOf[IntentionErrorMessage])
     }
 
-    "respond if there are no related plans for a goal" in {
+    "respond with a NoPlanMessage if there are no related plans for a goal" in {
       val prob = testKit.createTestProbe[IMessage]()
       YellowPages.agents("greeter") ! GoalMessage(StructTerm("howdy"),AkkaMessageSource(prob.ref))
-      assert(prob.receiveMessage().isInstanceOf[IntentionErrorMessage])
+      val message = prob.receiveMessage()
+      assert(message.isInstanceOf[IntentionErrorMessage])
+      assert(message.asInstanceOf[IntentionErrorMessage].cause.isInstanceOf[NoPlanMessage])
     }
 
 
@@ -54,3 +62,30 @@ class AgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
   
   override def afterAll(): Unit = testKit.shutdownTestKit()
 }
+
+/*
+
+if(plan_1 is applicable) {
+  add plan 1 to app_list
+}
+
+if(plan_2 is applicable) {
+  add plan 2 to app_list
+}
+
+if(list is not empty) {
+  selected = select_plan(list)
+
+  if(plan_1 is selected)
+    execute plan_1
+  else if (plan_2 is selected)
+    execute plan_2
+
+} else {
+
+}
+
+
+
+
+ */

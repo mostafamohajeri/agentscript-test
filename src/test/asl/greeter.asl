@@ -6,6 +6,11 @@
     #achieve(#executionContext.src,greetings("Madam"))
 .
 
++!hello("John") =>
+    #achieve(#executionContext.src,greetings("John"))
+.
+
+
 +!hi =>
     #achieve(#executionContext.src,greetings)
 .
