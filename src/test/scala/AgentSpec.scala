@@ -54,12 +54,6 @@ class AgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
     }
 
 
-    "say greetings in response to a hi" in {
-      val prob = testKit.createTestProbe[IMessage]()
-      m ! ActorSubscribeMessage("mocked",prob.ref)
-      mas.getYellowPages.agents("greeter") ! GoalMessage(StructTerm("hi"),AkkaMessageSource(prob.ref))
-      assert(prob.receiveMessage().asInstanceOf[GoalMessage].content.toString  equals  "greetings")
-    }
 
 
 

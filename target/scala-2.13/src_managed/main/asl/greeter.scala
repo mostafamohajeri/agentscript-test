@@ -40,9 +40,6 @@
                    case greeter.hello_1 =>
                      greeter.hello_1.execute(message.params.asInstanceOf[Parameters])
 
-                   case greeter.hi_0 =>
-                     greeter.hi_0.execute(message.params.asInstanceOf[Parameters])
-
 
            case _ =>
              context.log.error("This actor can not handle goal of type {}", message.goal)
@@ -79,10 +76,6 @@
            //          if(t.functor=="hello" && t.terms.size == 1 ) {
                        val args: Parameters = Parameters(t.terms.toList)
                        Option(SubGoalMessage(hello_1, args, ref))
-                     } else if(t.matchOnlyFunctorAndArity("hi",0)) {
-           //          if(t.functor=="hi" && t.terms.size == 0 ) {
-                       val args: Parameters = Parameters(t.terms.toList)
-                       Option(SubGoalMessage(hi_0, args, ref))
                      } else  {
              Option.empty[SubGoalMessage]
              }
@@ -252,34 +245,6 @@
                       def plan2(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
 
                                           PrimitiveAction.execute(PrimitiveAction.Parameters(() => achieve(executionContext.src,StructTerm("greetings",Seq[GenericTerm](StringTerm("John"))))))
-                                          hi_0.execute(Parameters(List(  )))
-
-
-                     }
-
-
-      }
-
-      object hi_0 extends IGoal {
-
-        def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
-         var vars = VarMap()
-                 //plan 0 start
-
-                         vars.clear()
-                             plan0(vars)
-                             return
-                          // plan 0 end
-
-
-             executionContext.src.asInstanceOf[AkkaMessageSource].address() ! IntentionErrorMessage(NoApplicablePlanMessage(),AkkaMessageSource(executionContext.agent.self))
-
-        }
-
-
-                      def plan0(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
-
-                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() => achieve(StringTerm("mocked"),StructTerm("greetings",Seq[GenericTerm]()))))
 
 
                      }
