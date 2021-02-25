@@ -37,8 +37,8 @@
             case SubGoalMessage(_,_,r) =>
                message.goal match {
 
-                   case greeter_simple.receive =>
-                     greeter_simple.receive.execute(message.params.asInstanceOf[Parameters])
+                   case greeter_simple.receive_1 =>
+                     greeter_simple.receive_1.execute(message.params.asInstanceOf[Parameters])
 
 
            case _ =>
@@ -72,17 +72,18 @@
          )
 
          def create_goal_message(t: StructTerm, ref: IMessageSource) (implicit executionContext: ExecutionContext): Option[SubGoalMessage] = {
-                     if(t.functor=="receive" && t.terms.size == 1 ) {
+                     if(t.matchOnlyFunctorAndArity("receive",1)) {
+           //          if(t.functor=="receive" && t.terms.size == 1 ) {
                        val args: Parameters = Parameters(t.terms.toList)
-                       Option(SubGoalMessage(receive, args, ref))
+                       Option(SubGoalMessage(receive_1, args, ref))
                      } else  {
              Option.empty[SubGoalMessage]
              }
          }
 
-     def apply(name: String, yellowPages: ActorRef[IMessage], MAS: ActorRef[IMessage]): Behavior[IMessage] = {
+     def apply(name: String, yellowPages: YellowPages, MAS: ActorRef[IMessage]): Behavior[IMessage] = {
        Behaviors.setup { context =>
-         val yp: ActorRef[IMessage] = yellowPages
+         val yp: YellowPages = yellowPages
          val bb: BeliefBaseStyla = BeliefBaseFactory()
          val logger = AgentLogger()
          implicit val executionContext: ExecutionContext = ExecutionContext(name, agent_type, context, yp, bb, logger)
@@ -176,7 +177,7 @@
      }
    }
 
-      object receive extends IGoal {
+      object receive_1 extends IGoal {
 
         def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
          var vars = VarMap()
@@ -185,14 +186,13 @@
                          vars.clear()
                          vars +=(   "M" -> params.l_params(0))
 
-
                          val r0 = executionContext.beliefBase.query(StructTerm(";",Seq[GenericTerm](StructTerm("==",Seq[GenericTerm](vars("M"),StringTerm("Hi"))),StructTerm("==",Seq[GenericTerm](vars("M"),StringTerm("Hello"))))))
 
                          if (r0.result) {
                              r0.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
                              plan0(vars)
                              return
-                         }
+                          }
 
                           // plan 0 end
 

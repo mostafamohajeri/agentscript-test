@@ -5,10 +5,15 @@ import org.scalatest.wordspec.AnyWordSpecLike
 
 class SimpleAgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
 
+
+  val mas = MAS()
+  val m = testKit.spawn(mas(), "MAS")
+
+
   override def beforeAll(): Unit = {
-    val mas = testKit.spawn(MAS(), "MAS")
+
     val prob = testKit.createTestProbe[IMessage]()
-    mas ! AgentRequestMessage(
+    m ! AgentRequestMessage(
       Seq(
         AgentRequest(asl.greeter_simple.Agent, "greeter_simple", 1),
       ),
@@ -20,26 +25,26 @@ class SimpleAgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
   "A simple greeter agent" should {
     "say greetings in response to a hello when needed" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter_simple") ! GoalMessage(StructTerm("receive",Seq(StringTerm("Hi"))),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter_simple") ! GoalMessage(StructTerm("receive",Seq(StringTerm("Hi"))),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().asInstanceOf[GoalMessage].content.toString  equals  "greetings")
     }
 
     "return an error if there are no applicable plans" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter_simple") ! GoalMessage(StructTerm("receive",Seq(StringTerm("Howdy"))),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter_simple") ! GoalMessage(StructTerm("receive",Seq(StringTerm("Howdy"))),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().isInstanceOf[IntentionErrorMessage])
     }
 
      "return an error if there are no relevant plans 1" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter_simple") ! GoalMessage(StructTerm("recieve"),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter_simple") ! GoalMessage(StructTerm("recieve"),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().isInstanceOf[IntentionErrorMessage])
     }
 
 
      "return an error if there are no relevant plans 2" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter_simple") ! GoalMessage(StructTerm("bad"),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter_simple") ! GoalMessage(StructTerm("bad"),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().isInstanceOf[IntentionErrorMessage])
     }
 

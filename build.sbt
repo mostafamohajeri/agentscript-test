@@ -27,8 +27,8 @@ resolvers += Resolver.bintrayRepo("uva-cci","styla-prolog")
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
 
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.15"
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.15"
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.16.SNAP3"
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.16.SNAP3"
 //libraryDependencies += "nl.uva.sne.cci" % "parser" % "0.2.14.SNAP3"
 //libraryDependencies += "nl.uva.sne.cci" % "scala-generator" % "0.2.14.SNAP3"
 libraryDependencies += "nl.uva.sne.cci" %% "stylaport" % "0.1.2"

@@ -5,10 +5,13 @@ import org.scalatest.wordspec.AnyWordSpecLike
 
 class AgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
 
+  val mas = MAS()
+  val m = testKit.spawn(mas(), "MAS")
+
   override def beforeAll(): Unit = {
-    val mas = testKit.spawn(MAS(), "MAS")
+
     val prob = testKit.createTestProbe[IMessage]()
-    mas ! AgentRequestMessage(
+    m ! AgentRequestMessage(
       Seq(
         AgentRequest(asl.greeter.Agent, "greeter", 1),
       ),
@@ -20,31 +23,31 @@ class AgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
   "A greeter agent" should {
     "say greetings(Sir) in response to a hello when needed" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("Mr. Bob"))),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("Mr. Bob"))),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().asInstanceOf[GoalMessage].content.toString  equals  "greetings(Sir)")
     }
 
     "say greetings(Madam) in response to a hello when needed" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("Ms. Alice"))),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("Ms. Alice"))),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().asInstanceOf[GoalMessage].content.toString  equals  "greetings(Madam)")
     }
 
     "say greetings(John) in response to a hello when needed" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("John"))),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("John"))),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().asInstanceOf[GoalMessage].content.toString  equals  "greetings(John)")
     }
 
     "respond if there are no applicable plans for a goal" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("Charlie"))),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter") ! GoalMessage(StructTerm("hello",Seq(StringTerm("Charlie"))),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().isInstanceOf[IntentionErrorMessage])
     }
 
     "respond with a NoPlanMessage if there are no related plans for a goal" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter") ! GoalMessage(StructTerm("howdy"),AkkaMessageSource(prob.ref))
+      mas.getYellowPages.agents("greeter") ! GoalMessage(StructTerm("howdy"),AkkaMessageSource(prob.ref))
       val message = prob.receiveMessage()
       assert(message.isInstanceOf[IntentionErrorMessage])
       assert(message.asInstanceOf[IntentionErrorMessage].cause.isInstanceOf[NoPlanMessage])
@@ -53,9 +56,12 @@ class AgentSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike {
 
     "say greetings in response to a hi" in {
       val prob = testKit.createTestProbe[IMessage]()
-      YellowPages.agents("greeter") ! GoalMessage(StructTerm("hi"),AkkaMessageSource(prob.ref))
+      m ! ActorSubscribeMessage("mocked",prob.ref)
+      mas.getYellowPages.agents("greeter") ! GoalMessage(StructTerm("hi"),AkkaMessageSource(prob.ref))
       assert(prob.receiveMessage().asInstanceOf[GoalMessage].content.toString  equals  "greetings")
     }
+
+
 
   }
 

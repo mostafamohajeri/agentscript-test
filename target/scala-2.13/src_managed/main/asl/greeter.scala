@@ -37,11 +37,11 @@
             case SubGoalMessage(_,_,r) =>
                message.goal match {
 
-                   case greeter.hello =>
-                     greeter.hello.execute(message.params.asInstanceOf[Parameters])
+                   case greeter.hello_1 =>
+                     greeter.hello_1.execute(message.params.asInstanceOf[Parameters])
 
-                   case greeter.hi =>
-                     greeter.hi.execute(message.params.asInstanceOf[Parameters])
+                   case greeter.hi_0 =>
+                     greeter.hi_0.execute(message.params.asInstanceOf[Parameters])
 
 
            case _ =>
@@ -75,21 +75,22 @@
          )
 
          def create_goal_message(t: StructTerm, ref: IMessageSource) (implicit executionContext: ExecutionContext): Option[SubGoalMessage] = {
-                     if(t.functor=="hello" && t.terms.size == 1 ) {
+                     if(t.matchOnlyFunctorAndArity("hello",1)) {
+           //          if(t.functor=="hello" && t.terms.size == 1 ) {
                        val args: Parameters = Parameters(t.terms.toList)
-                       Option(SubGoalMessage(hello, args, ref))
-                     } else 
-                     if(t.functor=="hi" && t.terms.size == 0 ) {
+                       Option(SubGoalMessage(hello_1, args, ref))
+                     } else if(t.matchOnlyFunctorAndArity("hi",0)) {
+           //          if(t.functor=="hi" && t.terms.size == 0 ) {
                        val args: Parameters = Parameters(t.terms.toList)
-                       Option(SubGoalMessage(hi, args, ref))
+                       Option(SubGoalMessage(hi_0, args, ref))
                      } else  {
              Option.empty[SubGoalMessage]
              }
          }
 
-     def apply(name: String, yellowPages: ActorRef[IMessage], MAS: ActorRef[IMessage]): Behavior[IMessage] = {
+     def apply(name: String, yellowPages: YellowPages, MAS: ActorRef[IMessage]): Behavior[IMessage] = {
        Behaviors.setup { context =>
-         val yp: ActorRef[IMessage] = yellowPages
+         val yp: YellowPages = yellowPages
          val bb: BeliefBaseStyla = BeliefBaseFactory()
          val logger = AgentLogger()
          implicit val executionContext: ExecutionContext = ExecutionContext(name, agent_type, context, yp, bb, logger)
@@ -183,7 +184,7 @@
      }
    }
 
-      object hello extends IGoal {
+      object hello_1 extends IGoal {
 
         def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
          var vars = VarMap()
@@ -192,14 +193,13 @@
                          vars.clear()
                          vars +=(   "Name" -> params.l_params(0))
 
-
                          val r0 = executionContext.beliefBase.query(StructTerm("==",Seq[GenericTerm](asString(vars("Name")).contains(StringTerm("Mr")),BooleanTerm(true))))
 
                          if (r0.result) {
                              r0.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
                              plan0(vars)
                              return
-                         }
+                          }
 
                           // plan 0 end
                  //plan 1 start
@@ -207,14 +207,13 @@
                          vars.clear()
                          vars +=(   "Name" -> params.l_params(0))
 
-
                          val r1 = executionContext.beliefBase.query(StructTerm(";",Seq[GenericTerm](StructTerm("==",Seq[GenericTerm](asString(vars("Name")).contains(StringTerm("Ms")),BooleanTerm(true))),asString(vars("Name")).contains(StringTerm("Mrs")))))
 
                          if (r1.result) {
                              r1.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
                              plan1(vars)
                              return
-                         }
+                          }
 
                           // plan 1 end
                  //plan 2 start
@@ -227,15 +226,8 @@
                          {
                           m2.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
 
-
-                         val r2 = executionContext.beliefBase.query()
-
-                         if (r2.result) {
-                             r2.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
                              plan2(vars)
                              return
-                         }
-
                           }
                           // plan 2 end
 
@@ -260,6 +252,7 @@
                       def plan2(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
 
                                           PrimitiveAction.execute(PrimitiveAction.Parameters(() => achieve(executionContext.src,StructTerm("greetings",Seq[GenericTerm](StringTerm("John"))))))
+                                          hi_0.execute(Parameters(List(  )))
 
 
                      }
@@ -267,22 +260,15 @@
 
       }
 
-      object hi extends IGoal {
+      object hi_0 extends IGoal {
 
         def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
          var vars = VarMap()
                  //plan 0 start
 
                          vars.clear()
-
-                         val r0 = executionContext.beliefBase.query()
-
-                         if (r0.result) {
-                             r0.bindings foreach { case (k, v) => vars += (k -> v.asInstanceOf[GenericTerm]) }
                              plan0(vars)
                              return
-                         }
-
                           // plan 0 end
 
 
@@ -293,7 +279,7 @@
 
                       def plan0(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
 
-                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() => achieve(executionContext.src,StructTerm("greetings",Seq[GenericTerm]()))))
+                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() => achieve(StringTerm("mocked"),StructTerm("greetings",Seq[GenericTerm]()))))
 
 
                      }

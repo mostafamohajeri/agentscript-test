@@ -37,11 +37,11 @@
             case SubGoalMessage(_,_,r) =&gt;
                message.goal match {
 
-                   case greeter.hello =&gt;
-                     greeter.hello.execute(message.params.asInstanceOf[Parameters])
+                   case greeter.hello_1 =&gt;
+                     greeter.hello_1.execute(message.params.asInstanceOf[Parameters])
 
-                   case greeter.hi =&gt;
-                     greeter.hi.execute(message.params.asInstanceOf[Parameters])
+                   case greeter.hi_0 =&gt;
+                     greeter.hi_0.execute(message.params.asInstanceOf[Parameters])
 
 
            case _ =&gt;
@@ -75,21 +75,22 @@
          )
 
          def create_goal_message(t: StructTerm, ref: IMessageSource) (implicit executionContext: ExecutionContext): Option[SubGoalMessage] = {
-<span class="pc bpc" id="L78" title="4 of 8 branches missed.">                     if(t.functor==&quot;hello&quot; &amp;&amp; t.terms.size == 1 ) {</span>
-<span class="fc" id="L79">                       val args: Parameters = Parameters(t.terms.toList)</span>
-<span class="fc" id="L80">                       Option(SubGoalMessage(hello, args, ref))</span>
-                     } else 
-<span class="pc bpc" id="L82" title="4 of 8 branches missed.">                     if(t.functor==&quot;hi&quot; &amp;&amp; t.terms.size == 0 ) {</span>
-<span class="fc" id="L83">                       val args: Parameters = Parameters(t.terms.toList)</span>
-<span class="fc" id="L84">                       Option(SubGoalMessage(hi, args, ref))</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                     if(t.matchOnlyFunctorAndArity(&quot;hello&quot;,1)) {</span>
+           //          if(t.functor==&quot;hello&quot; &amp;&amp; t.terms.size == 1 ) {
+<span class="fc" id="L80">                       val args: Parameters = Parameters(t.terms.toList)</span>
+<span class="fc" id="L81">                       Option(SubGoalMessage(hello_1, args, ref))</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                     } else if(t.matchOnlyFunctorAndArity(&quot;hi&quot;,0)) {</span>
+           //          if(t.functor==&quot;hi&quot; &amp;&amp; t.terms.size == 0 ) {
+<span class="fc" id="L84">                       val args: Parameters = Parameters(t.terms.toList)</span>
+<span class="fc" id="L85">                       Option(SubGoalMessage(hi_0, args, ref))</span>
                      } else  {
-<span class="fc" id="L86">             Option.empty[SubGoalMessage]</span>
+<span class="fc" id="L87">             Option.empty[SubGoalMessage]</span>
              }
          }
 
-     def apply(name: String, yellowPages: ActorRef[IMessage], MAS: ActorRef[IMessage]): Behavior[IMessage] = {
-<span class="fc" id="L91">       Behaviors.setup { context =&gt;</span>
-         val yp: ActorRef[IMessage] = yellowPages
+     def apply(name: String, yellowPages: YellowPages, MAS: ActorRef[IMessage]): Behavior[IMessage] = {
+<span class="fc" id="L92">       Behaviors.setup { context =&gt;</span>
+         val yp: YellowPages = yellowPages
          val bb: BeliefBaseStyla = BeliefBaseFactory()
          val logger = AgentLogger()
          implicit val executionContext: ExecutionContext = ExecutionContext(name, agent_type, context, yp, bb, logger)
@@ -150,7 +151,7 @@
      }
 
      def normal_behavior()(implicit executionContext: ExecutionContext): Behavior[IMessage] = {
-<span class="fc" id="L153">       Behaviors.setup { context =&gt;</span>
+<span class="fc" id="L154">       Behaviors.setup { context =&gt;</span>
 
          val pool = Routers.pool(poolSize = 8)(
            Behaviors.supervise(Intention(executionContext)).onFailure[Exception](SupervisorStrategy.restart))
@@ -183,15 +184,14 @@
      }
    }
 
-<span class="fc" id="L186">      object hello extends IGoal {</span>
+<span class="fc" id="L187">      object hello_1 extends IGoal {</span>
 
         def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
-<span class="fc" id="L189">         var vars = VarMap()</span>
+<span class="fc" id="L190">         var vars = VarMap()</span>
                  //plan 0 start
 
-<span class="fc" id="L192">                         vars.clear()</span>
-<span class="fc" id="L193">                         vars +=(   &quot;Name&quot; -&gt; params.l_params(0))</span>
-
+<span class="fc" id="L193">                         vars.clear()</span>
+<span class="fc" id="L194">                         vars +=(   &quot;Name&quot; -&gt; params.l_params(0))</span>
 
 <span class="fc" id="L196">                         val r0 = executionContext.beliefBase.query(StructTerm(&quot;==&quot;,Seq[GenericTerm](asString(vars(&quot;Name&quot;)).contains(StringTerm(&quot;Mr&quot;)),BooleanTerm(true))))</span>
 
@@ -199,7 +199,7 @@
 <span class="fc" id="L199">                             r0.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
 <span class="fc" id="L200">                             plan0(vars)</span>
 <span class="fc" id="L201">                             return</span>
-                         }
+                          }
 
                           // plan 0 end
                  //plan 1 start
@@ -207,59 +207,52 @@
 <span class="fc" id="L207">                         vars.clear()</span>
 <span class="fc" id="L208">                         vars +=(   &quot;Name&quot; -&gt; params.l_params(0))</span>
 
+<span class="fc" id="L210">                         val r1 = executionContext.beliefBase.query(StructTerm(&quot;;&quot;,Seq[GenericTerm](StructTerm(&quot;==&quot;,Seq[GenericTerm](asString(vars(&quot;Name&quot;)).contains(StringTerm(&quot;Ms&quot;)),BooleanTerm(true))),asString(vars(&quot;Name&quot;)).contains(StringTerm(&quot;Mrs&quot;)))))</span>
 
-<span class="fc" id="L211">                         val r1 = executionContext.beliefBase.query(StructTerm(&quot;;&quot;,Seq[GenericTerm](StructTerm(&quot;==&quot;,Seq[GenericTerm](asString(vars(&quot;Name&quot;)).contains(StringTerm(&quot;Ms&quot;)),BooleanTerm(true))),asString(vars(&quot;Name&quot;)).contains(StringTerm(&quot;Mrs&quot;)))))</span>
-
-<span class="fc bfc" id="L213" title="All 2 branches covered.">                         if (r1.result) {</span>
-<span class="fc" id="L214">                             r1.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
-<span class="fc" id="L215">                             plan1(vars)</span>
-<span class="fc" id="L216">                             return</span>
-                         }
+<span class="fc bfc" id="L212" title="All 2 branches covered.">                         if (r1.result) {</span>
+<span class="fc" id="L213">                             r1.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
+<span class="fc" id="L214">                             plan1(vars)</span>
+<span class="fc" id="L215">                             return</span>
+                          }
 
                           // plan 1 end
                  //plan 2 start
 
-<span class="fc" id="L222">                         vars.clear()</span>
-<span class="fc" id="L223">                         vars +=( &quot;0&quot; -&gt; params.l_params(0))</span>
+<span class="fc" id="L221">                         vars.clear()</span>
+<span class="fc" id="L222">                         vars +=( &quot;0&quot; -&gt; params.l_params(0))</span>
 
-<span class="fc" id="L225">                         val m2 = executionContext.beliefBase.matchTerms(StructTerm(&quot;hello&quot;,Seq[GenericTerm](StringTerm(&quot;John&quot;))),StructTerm(&quot;hello&quot;,params.l_params));</span>
-<span class="fc bfc" id="L226" title="All 2 branches covered.">                         if(m2.result)</span>
+<span class="fc" id="L224">                         val m2 = executionContext.beliefBase.matchTerms(StructTerm(&quot;hello&quot;,Seq[GenericTerm](StringTerm(&quot;John&quot;))),StructTerm(&quot;hello&quot;,params.l_params));</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">                         if(m2.result)</span>
                          {
-<span class="fc" id="L228">                          m2.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
+<span class="fc" id="L227">                          m2.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
 
-
-<span class="fc" id="L231">                         val r2 = executionContext.beliefBase.query()</span>
-
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">                         if (r2.result) {</span>
-<span class="fc" id="L234">                             r2.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
-<span class="fc" id="L235">                             plan2(vars)</span>
-<span class="fc" id="L236">                             return</span>
-                         }
-
+<span class="fc" id="L229">                             plan2(vars)</span>
+<span class="fc" id="L230">                             return</span>
                           }
                           // plan 2 end
 
 
-<span class="fc" id="L243">             executionContext.src.asInstanceOf[AkkaMessageSource].address() ! IntentionErrorMessage(NoApplicablePlanMessage(),AkkaMessageSource(executionContext.agent.self))</span>
+<span class="fc" id="L235">             executionContext.src.asInstanceOf[AkkaMessageSource].address() ! IntentionErrorMessage(NoApplicablePlanMessage(),AkkaMessageSource(executionContext.agent.self))</span>
 
         }
 
 
                       def plan0(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
 
-<span class="fc" id="L250">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.src,StructTerm(&quot;greetings&quot;,Seq[GenericTerm](StringTerm(&quot;Sir&quot;))))))</span>
+<span class="fc" id="L242">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.src,StructTerm(&quot;greetings&quot;,Seq[GenericTerm](StringTerm(&quot;Sir&quot;))))))</span>
 
 
                      }
                       def plan1(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
 
-<span class="fc" id="L256">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.src,StructTerm(&quot;greetings&quot;,Seq[GenericTerm](StringTerm(&quot;Madam&quot;))))))</span>
+<span class="fc" id="L248">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.src,StructTerm(&quot;greetings&quot;,Seq[GenericTerm](StringTerm(&quot;Madam&quot;))))))</span>
 
 
                      }
                       def plan2(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
 
-<span class="fc" id="L262">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.src,StructTerm(&quot;greetings&quot;,Seq[GenericTerm](StringTerm(&quot;John&quot;))))))</span>
+<span class="fc" id="L254">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.src,StructTerm(&quot;greetings&quot;,Seq[GenericTerm](StringTerm(&quot;John&quot;))))))</span>
+<span class="fc" id="L255">                                          hi_0.execute(Parameters(List(  )))</span>
 
 
                      }
@@ -267,33 +260,26 @@
 
       }
 
-<span class="fc" id="L270">      object hi extends IGoal {</span>
+<span class="fc" id="L263">      object hi_0 extends IGoal {</span>
 
         def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
-<span class="fc" id="L273">         var vars = VarMap()</span>
+<span class="fc" id="L266">         var vars = VarMap()</span>
                  //plan 0 start
 
-<span class="fc" id="L276">                         vars.clear()</span>
-
-<span class="fc" id="L278">                         val r0 = executionContext.beliefBase.query()</span>
-
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">                         if (r0.result) {</span>
-<span class="fc" id="L281">                             r0.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }</span>
-<span class="fc" id="L282">                             plan0(vars)</span>
-<span class="fc" id="L283">                             return</span>
-                         }
-
+<span class="fc" id="L269">                         vars.clear()</span>
+<span class="fc" id="L270">                             plan0(vars)</span>
+<span class="fc" id="L271">                             return</span>
                           // plan 0 end
 
 
-<span class="nc" id="L289">             executionContext.src.asInstanceOf[AkkaMessageSource].address() ! IntentionErrorMessage(NoApplicablePlanMessage(),AkkaMessageSource(executionContext.agent.self))</span>
+             executionContext.src.asInstanceOf[AkkaMessageSource].address() ! IntentionErrorMessage(NoApplicablePlanMessage(),AkkaMessageSource(executionContext.agent.self))
 
         }
 
 
                       def plan0(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
 
-<span class="fc" id="L296">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(executionContext.src,StructTerm(&quot;greetings&quot;,Seq[GenericTerm]()))))</span>
+<span class="fc" id="L282">                                          PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; achieve(StringTerm(&quot;mocked&quot;),StructTerm(&quot;greetings&quot;,Seq[GenericTerm]()))))</span>
 
 
                      }
