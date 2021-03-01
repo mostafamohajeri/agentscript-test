@@ -26,9 +26,9 @@ resolvers += Resolver.bintrayRepo("uva-cci","styla-prolog")
 // You can define other libraries as dependencies in your build like this:
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
-resolvers += Resolver.mavenLocal
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.17.SNAP6"
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.17.SNAP6"
+//resolvers += Resolver.mavenLocal
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.17.SNAP7"
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.17.SNAP7"
 //libraryDependencies += "nl.uva.sne.cci" % "parser" % "0.2.14.SNAP3"
 //libraryDependencies += "nl.uva.sne.cci" % "scala-generator" % "0.2.14.SNAP3"
 libraryDependencies += "nl.uva.sne.cci" %% "stylaport" % "0.1.2"
