@@ -1,0 +1,3759 @@
+# Coverage data, format version: 2.0
+# Statement data:
+# - id
+# - source path
+# - package name
+# - class name
+# - class type (Class, Object or Trait)
+# - full class name
+# - method name
+# - start offset
+# - end offset
+# - line number
+# - symbol name
+# - tree name
+# - is branch
+# - invocations count
+# - is ignored
+# - description (can be multi-line)
+# '' sign
+# ------------------------------------------
+1
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/src/main/scala/Test.scala
+<empty>
+Test
+Class
+Test
+create_goal_message
+196
+212
+7
+java.lang.String.equals
+Apply
+false
+0
+false
+t.equals("hello")
+
+2
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/src/main/scala/Test.scala
+<empty>
+Test
+Class
+Test
+create_goal_message
+223
+233
+8
+scala.Predef.println
+Apply
+false
+0
+false
+scala.Predef.println(i)
+
+3
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/src/main/scala/Test.scala
+<empty>
+Test
+Class
+Test
+create_goal_message
+223
+233
+8
+scala.Predef.println
+Block
+true
+0
+false
+scala.Predef.println(i)
+
+4
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/src/main/scala/Test.scala
+<empty>
+Test
+Class
+Test
+create_goal_message
+262
+267
+10
+scala.collection.StringOps.*
+Apply
+false
+0
+false
+scala.Predef.augmentString(i).*(2)
+
+5
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/src/main/scala/Test.scala
+<empty>
+Test
+Class
+Test
+create_goal_message
+254
+268
+10
+scala.Predef.println
+Apply
+false
+0
+false
+scala.Predef.println(scala.Predef.augmentString(i).*(2))
+
+6
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/src/main/scala/Test.scala
+<empty>
+Test
+Class
+Test
+create_goal_message
+254
+268
+10
+scala.Predef.println
+Block
+true
+0
+false
+scala.Predef.println(scala.Predef.augmentString(i).*(2))
+
+7
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1318
+1332
+37
+infrastructure.IMessage.source
+Select
+false
+0
+false
+message.source
+
+8
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1286
+1286
+37
+infrastructure.ExecutionContext.copy$default$1
+Select
+false
+0
+false
+p_executionContext.copy$default$1
+
+9
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1286
+1286
+37
+infrastructure.ExecutionContext.copy$default$2
+Select
+false
+0
+false
+p_executionContext.copy$default$2
+
+10
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1286
+1286
+37
+infrastructure.ExecutionContext.copy$default$3
+Select
+false
+0
+false
+p_executionContext.copy$default$3
+
+11
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1286
+1286
+37
+infrastructure.ExecutionContext.copy$default$4
+Select
+false
+0
+false
+p_executionContext.copy$default$4
+
+12
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1286
+1286
+37
+infrastructure.ExecutionContext.copy$default$5
+Select
+false
+0
+false
+p_executionContext.copy$default$5
+
+13
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1286
+1286
+37
+infrastructure.ExecutionContext.copy$default$6
+Select
+false
+0
+false
+p_executionContext.copy$default$6
+
+14
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1267
+1333
+37
+infrastructure.ExecutionContext.copy
+Apply
+false
+0
+false
+p_executionContext.copy(x$3, x$4, x$5, x$6, x$7, x$8, x$1, x$2)
+
+15
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1417
+1429
+41
+infrastructure.ISubGoalMessage.goal
+Select
+false
+0
+false
+message.goal
+
+16
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1506
+1573
+44
+asl.worker.init_1.execute
+ApplyToImplicitArgs
+false
+0
+false
+worker.this.init_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+
+17
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1643
+1711
+47
+asl.worker.token_1.execute
+ApplyToImplicitArgs
+false
+0
+false
+worker.this.token_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+
+18
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1766
+1809
+51
+<nosymbol>
+Literal
+false
+0
+false
+"This actor can not handle goal of type {}"
+
+19
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1811
+1823
+51
+infrastructure.ISubGoalMessage.goal
+Select
+false
+0
+false
+message.goal
+
+20
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1748
+1824
+51
+org.slf4j.Logger.error
+Apply
+false
+0
+false
+context.log.error("This actor can not handle goal of type {}", message.goal)
+
+21
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1924
+1929
+55
+infrastructure.AkkaMessageSource.src
+Select
+false
+0
+false
+a.src
+
+22
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1971
+1998
+55
+akka.actor.typed.scaladsl.ActorContext.self
+Select
+false
+0
+false
+executionContext.agent.self
+
+23
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1953
+1999
+55
+infrastructure.AkkaMessageSource.apply
+Apply
+false
+0
+false
+infrastructure.AkkaMessageSource.apply(executionContext.agent.self)
+
+24
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1932
+2000
+55
+infrastructure.IntentionDoneMessage.apply
+Apply
+false
+0
+false
+infrastructure.IntentionDoneMessage.apply(infrastructure.AkkaMessageSource.apply(executionContext.agent.self))
+
+25
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1924
+2000
+55
+akka.actor.typed.ActorRef.ActorRefOps.!
+Apply
+false
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](a.src).!(infrastructure.IntentionDoneMessage.apply(infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+
+26
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+2068
+2104
+57
+org.slf4j.Logger.error
+Apply
+false
+0
+false
+context.log.error("Intention Done!")
+
+27
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+2138
+2152
+60
+akka.actor.typed.scaladsl.Behaviors.same
+TypeApply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.same[infrastructure.ISubGoalMessage]
+
+28
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+2207
+2224
+62
+akka.actor.typed.scaladsl.Behaviors.stopped
+TypeApply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.stopped[infrastructure.ISubGoalMessage]
+
+29
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1173
+2241
+34
+akka.actor.typed.scaladsl.Behaviors.receive
+Apply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.ISubGoalMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage], message: infrastructure.ISubGoalMessage) => {
+  implicit val executionContext: infrastructure.ExecutionContext = {
+    <artifact> val x$1: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage] @scala.reflect.internal.annotations.uncheckedBounds = context;
+    <artifact> val x$2: infrastructure.IMessageSource = message.source;
+    <artifact> val x$3: String = p_executionContext.copy$default$1;
+    <artifact> val x$4: String = p_executionContext.copy$default$2;
+    <artifact> val x$5: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage] @scala.reflect.internal.annotations.uncheckedBounds = p_executionContext.copy$default$3;
+    <artifact> val x$6: infrastructure.IYellowPages = p_executionContext.copy$default$4;
+    <artifact> val x$7: bb.IBeliefBase[bb.expstyla.exp.GenericTerm] @scala.reflect.internal.annotations.uncheckedBounds = p_executionContext.copy$default$5;
+    <artifact> val x$8: org.slf4j.Logger = p_executionContext.copy$default$6;
+    p_executionContext.copy(x$3, x$4, x$5, x$6, x$7, x$8, x$1, x$2)
+  };
+  message match {
+    case (p_goal: infrastructure.IGoal, p_params: infrastructure.IParams, p_src: infrastructure.IMessageSource): infrastructure.SubGoalMessage(_, _, (r @ _)) => {
+      message.goal match {
+        case worker.this.init_1 => worker.this.init_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        case worker.this.token_1 => worker.this.token_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        case _ => context.log.error("This actor can not handle goal of type {}", message.goal)
+      };
+      r match {
+        case (a @ (_: infrastructure.AkkaMessageSource)) => typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](a.src).!(infrastructure.IntentionDoneMessage.apply(infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        case (p_name: String): infrastructure.DummyMessageSource(_) => context.log.error("Intention Done!")
+      };
+      akka.actor.typed.scaladsl.Behaviors.same[infrastructure.ISubGoalMessage]
+    }
+    case (p_src: akka.actor.typed.ActorRef[infrastructure.IMessage]): infrastructure.InitEndMessage((r @ _)) => akka.actor.typed.scaladsl.Behaviors.stopped[infrastructure.ISubGoalMessage]
+  }
+}))
+
+30
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Intention
+Object
+asl.worker.Intention
+apply
+1134
+2248
+32
+akka.actor.typed.scaladsl.Behaviors.setup
+Apply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.setup[infrastructure.ISubGoalMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage]) => akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.ISubGoalMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage], message: infrastructure.ISubGoalMessage) => {
+  implicit val executionContext: infrastructure.ExecutionContext = {
+    <artifact> val x$1: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage] @scala.reflect.internal.annotations.uncheckedBounds = context;
+    <artifact> val x$2: infrastructure.IMessageSource = message.source;
+    <artifact> val x$3: String = p_executionContext.copy$default$1;
+    <artifact> val x$4: String = p_executionContext.copy$default$2;
+    <artifact> val x$5: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage] @scala.reflect.internal.annotations.uncheckedBounds = p_executionContext.copy$default$3;
+    <artifact> val x$6: infrastructure.IYellowPages = p_executionContext.copy$default$4;
+    <artifact> val x$7: bb.IBeliefBase[bb.expstyla.exp.GenericTerm] @scala.reflect.internal.annotations.uncheckedBounds = p_executionContext.copy$default$5;
+    <artifact> val x$8: org.slf4j.Logger = p_executionContext.copy$default$6;
+    p_executionContext.copy(x$3, x$4, x$5, x$6, x$7, x$8, x$1, x$2)
+  };
+  message match {
+    case (p_goal: infrastructure.IGoal, p_params: infrastructure.IParams, p_src: infrastructure.IMessageSource): infrastructure.SubGoalMessage(_, _, (r @ _)) => {
+      message.goal match {
+        case worker.this.init_1 => worker.this.init_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        case worker.this.token_1 => worker.this.token_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        case _ => context.log.error("This actor can not handle goal of type {}", message.goal)
+      };
+      r match {
+        case (a @ (_: infrastructure.AkkaMessageSource)) => typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](a.src).!(infrastructure.IntentionDoneMessage.apply(infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        case (p_name: String): infrastructure.DummyMessageSource(_) => context.log.error("Intention Done!")
+      };
+      akka.actor.typed.scaladsl.Behaviors.same[infrastructure.ISubGoalMessage]
+    }
+    case (p_src: akka.actor.typed.ActorRef[infrastructure.IMessage]): infrastructure.InitEndMessage((r @ _)) => akka.actor.typed.scaladsl.Behaviors.stopped[infrastructure.ISubGoalMessage]
+  }
+}))))
+
+31
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+worker
+Class
+asl.worker
+agentBuilder
+2293
+2304
+68
+asl.worker.Agent.<init>
+Apply
+false
+0
+false
+new worker.this.Agent()
+
+32
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+agent_type
+2379
+2387
+71
+<nosymbol>
+Literal
+false
+0
+false
+"worker"
+
+33
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+<none>
+2409
+2409
+73
+bb.expstyla.exp.VarMap.apply$default$1
+Select
+false
+0
+false
+bb.expstyla.exp.VarMap.apply$default$1
+
+34
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+<none>
+2409
+2417
+73
+bb.expstyla.exp.VarMap.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.VarMap.apply(bb.expstyla.exp.VarMap.apply$default$1)
+
+35
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+initGoals
+2491
+2519
+75
+scala.collection.immutable.Nil
+Select
+false
+0
+false
+scala.collection.immutable.Nil
+
+36
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+initBeliefs
+2595
+2623
+78
+scala.collection.immutable.Nil
+Select
+false
+0
+false
+scala.collection.immutable.Nil
+
+37
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+2792
+2828
+82
+bb.expstyla.exp.StructTerm.matchOnlyFunctorAndArity
+Apply
+false
+0
+false
+t.matchOnlyFunctorAndArity("init", 1)
+
+38
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+2958
+2972
+84
+scala.collection.IterableOnceOps.toList
+Select
+false
+0
+false
+t.terms.toList
+
+39
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+2947
+2973
+84
+infrastructure.Parameters.apply
+Apply
+false
+0
+false
+infrastructure.Parameters.apply(t.terms.toList)
+
+40
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3019
+3025
+85
+asl.worker.init_1
+Select
+false
+0
+false
+worker.this.init_1
+
+41
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3004
+3037
+85
+infrastructure.SubGoalMessage.apply
+Apply
+false
+0
+false
+infrastructure.SubGoalMessage.apply(worker.this.init_1, args, ref)
+
+42
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+2997
+3038
+85
+scala.Option.apply
+Apply
+false
+0
+false
+scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.init_1, args, ref))
+
+43
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+2830
+3061
+82
+<nosymbol>
+Block
+true
+0
+false
+{
+  val args: infrastructure.Parameters = infrastructure.Parameters.apply(t.terms.toList);
+  scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.init_1, args, ref))
+}
+
+44
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3070
+3107
+86
+bb.expstyla.exp.StructTerm.matchOnlyFunctorAndArity
+Apply
+false
+0
+false
+t.matchOnlyFunctorAndArity("token", 1)
+
+45
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3238
+3252
+88
+scala.collection.IterableOnceOps.toList
+Select
+false
+0
+false
+t.terms.toList
+
+46
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3227
+3253
+88
+infrastructure.Parameters.apply
+Apply
+false
+0
+false
+infrastructure.Parameters.apply(t.terms.toList)
+
+47
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3299
+3306
+89
+asl.worker.token_1
+Select
+false
+0
+false
+worker.this.token_1
+
+48
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3284
+3318
+89
+infrastructure.SubGoalMessage.apply
+Apply
+false
+0
+false
+infrastructure.SubGoalMessage.apply(worker.this.token_1, args, ref)
+
+49
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3277
+3319
+89
+scala.Option.apply
+Apply
+false
+0
+false
+scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.token_1, args, ref))
+
+50
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3109
+3342
+86
+<nosymbol>
+Block
+true
+0
+false
+{
+  val args: infrastructure.Parameters = infrastructure.Parameters.apply(t.terms.toList);
+  scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.token_1, args, ref))
+}
+
+51
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3364
+3392
+91
+scala.Option.empty
+TypeApply
+false
+0
+false
+scala.Option.empty[infrastructure.SubGoalMessage]
+
+52
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3364
+3392
+91
+scala.Option.empty
+Block
+true
+0
+false
+scala.Option.empty[infrastructure.SubGoalMessage]
+
+53
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+create_goal_message
+3067
+3407
+86
+<nosymbol>
+If
+true
+0
+false
+if (t.matchOnlyFunctorAndArity("token", 1))
+  {
+    val args: infrastructure.Parameters = infrastructure.Parameters.apply(t.terms.toList);
+    scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.token_1, args, ref))
+  }
+else
+  scala.Option.empty[infrastructure.SubGoalMessage]
+
+54
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3662
+3681
+98
+bb.IBeliefBaseFactory.apply
+Apply
+false
+0
+false
+worker.this.beliefBaseFactory.apply()
+
+55
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3768
+3778
+99
+asl.worker.Agent.agent_type
+Select
+false
+0
+false
+Agent.this.agent_type
+
+56
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3797
+3808
+99
+akka.actor.typed.scaladsl.ActorContext.log
+Select
+false
+0
+false
+context.log
+
+57
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3745
+3809
+99
+infrastructure.ExecutionContext.apply
+Apply
+false
+0
+false
+infrastructure.ExecutionContext.apply(name, Agent.this.agent_type, context, yp, bb, context.log)
+
+58
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3833
+3844
+100
+asl.worker.Agent.initBeliefs
+ApplyToImplicitArgs
+false
+0
+false
+Agent.this.initBeliefs()(executionContext)
+
+59
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3823
+3845
+100
+bb.IBeliefBase.assert
+Apply
+false
+0
+false
+bb.assert(Agent.this.initBeliefs()(executionContext))
+
+60
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3886
+3913
+102
+asl.worker.Intention.apply
+Apply
+false
+0
+false
+worker.this.Intention.apply(executionContext)
+
+61
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3915
+3926
+102
+<nosymbol>
+Literal
+false
+0
+false
+"initiator"
+
+62
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3880
+3880
+102
+akka.actor.typed.scaladsl.ActorContext.spawn$default$3
+TypeApply
+false
+0
+false
+context.spawn$default$3[Nothing]
+
+63
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3872
+3927
+102
+akka.actor.typed.scaladsl.ActorContext.spawn
+Apply
+false
+0
+false
+context.spawn[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext), "initiator", context.spawn$default$3[Nothing])
+
+64
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3957
+3969
+104
+akka.actor.typed.scaladsl.ActorContext.self
+Select
+false
+0
+false
+context.self
+
+65
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3944
+3970
+104
+infrastructure.ReadyMessage.apply
+Apply
+false
+0
+false
+infrastructure.ReadyMessage.apply(context.self)
+
+66
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3938
+3970
+104
+akka.actor.typed.ActorRef.ActorRefOps.!
+Apply
+false
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](MAS).!(infrastructure.ReadyMessage.apply(context.self))
+
+67
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+4151
+4156
+111
+<nosymbol>
+Literal
+false
+0
+false
+99999
+
+68
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+4151
+4164
+111
+scala.concurrent.duration.DurationConversions.seconds
+Select
+false
+0
+false
+scala.concurrent.duration.`package`.DurationInt(99999).seconds
+
+69
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+4151
+4164
+111
+akka.util.Timeout.durationToTimeout
+ApplyImplicitView
+false
+0
+false
+util.this.Timeout.durationToTimeout(scala.concurrent.duration.`package`.DurationInt(99999).seconds)
+
+70
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+4200
+4224
+112
+akka.actor.typed.scaladsl.ActorContext.executionContext
+Select
+false
+0
+false
+context.executionContext
+
+71
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+4267
+4291
+113
+akka.actor.typed.ActorSystem.scheduler
+Select
+false
+0
+false
+context.system.scheduler
+
+72
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+4514
+4869
+120
+akka.actor.typed.scaladsl.AskPattern.Askable.ask
+ApplyToImplicitArgs
+false
+0
+false
+akka.actor.typed.scaladsl.AskPattern.Askable[infrastructure.ISubGoalMessage](initiator).ask[infrastructure.IMessage](((ref: akka.actor.typed.ActorRef[infrastructure.IMessage]) => {
+  val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(struct, infrastructure.AkkaMessageSource.apply(ref))(executionContext);
+  if (subGoal.isDefined)
+    subGoal.get
+  else
+    throw new scala.`package`.RuntimeException(("No plan for initial goal ".+(struct): String))
+}))(timeout, scheduler)
+
+73
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+4891
+5091
+130
+scala.concurrent.Future.onComplete
+ApplyToImplicitArgs
+false
+0
+false
+result.onComplete[infrastructure.Message[infrastructure.IMessageSource] with Product with java.io.Serializable](((x0$1: scala.util.Try[infrastructure.IMessage]) => x0$1 match {
+  case (value: infrastructure.IMessage): scala.util.Success[infrastructure.IMessage]((src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _))) => infrastructure.IntentionDoneMessage.apply(r)
+  case (exception: Throwable): scala.util.Failure[infrastructure.IMessage](_) => {
+    <artifact> val x$1: Null(null) = null;
+    <artifact> val x$2: infrastructure.FailureCause = infrastructure.IntentionErrorMessage.apply$default$1;
+    infrastructure.IntentionErrorMessage.apply(x$2, null)
+  }
+}))(ec)
+
+74
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+5133
+5149
+135
+akka.util.Timeout.duration
+Select
+false
+0
+false
+timeout.duration
+
+75
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+5112
+5150
+135
+scala.concurrent.Await.result
+Apply
+false
+0
+false
+scala.concurrent.Await.result[infrastructure.IMessage](result, timeout.duration)
+
+76
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+4432
+5558
+117
+scala.collection.immutable.List.foreach
+Apply
+false
+0
+false
+Agent.this.initGoals()(executionContext).foreach[infrastructure.IMessage](((struct: bb.expstyla.exp.StructTerm) => {
+  val result: scala.concurrent.Future[infrastructure.IMessage] = akka.actor.typed.scaladsl.AskPattern.Askable[infrastructure.ISubGoalMessage](initiator).ask[infrastructure.IMessage](((ref: akka.actor.typed.ActorRef[infrastructure.IMessage]) => {
+    val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(struct, infrastructure.AkkaMessageSource.apply(ref))(executionContext);
+    if (subGoal.isDefined)
+      subGoal.get
+    else
+      throw new scala.`package`.RuntimeException(("No plan for initial goal ".+(struct): String))
+  }))(timeout, scheduler);
+  result.onComplete[infrastructure.Message[infrastructure.IMessageSource] with Product with java.io.Serializable](((x0$1: scala.util.Try[infrastructure.IMessage]) => x0$1 match {
+    case (value: infrastructure.IMessage): scala.util.Success[infrastructure.IMessage]((src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _))) => infrastructure.IntentionDoneMessage.apply(r)
+    case (exception: Throwable): scala.util.Failure[infrastructure.IMessage](_) => {
+      <artifact> val x$1: Null(null) = null;
+      <artifact> val x$2: infrastructure.FailureCause = infrastructure.IntentionErrorMessage.apply$default$1;
+      infrastructure.IntentionErrorMessage.apply(x$2, null)
+    }
+  }))(ec);
+  scala.concurrent.Await.result[infrastructure.IMessage](result, timeout.duration)
+}))
+
+77
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+5604
+5616
+144
+akka.actor.typed.scaladsl.ActorContext.self
+Select
+false
+0
+false
+context.self
+
+78
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+5589
+5617
+144
+infrastructure.InitEndMessage.apply
+Apply
+false
+0
+false
+infrastructure.InitEndMessage.apply(context.self)
+
+79
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+5577
+5617
+144
+akka.actor.typed.ActorRef.ActorRefOps.!
+Apply
+false
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](initiator).!(infrastructure.InitEndMessage.apply(context.self))
+
+80
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+5635
+5652
+145
+asl.worker.Agent.normal_behavior
+ApplyToImplicitArgs
+false
+0
+false
+Agent.this.normal_behavior()(executionContext)
+
+81
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3980
+5879
+105
+akka.actor.typed.scaladsl.Behaviors.receive
+Apply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage], message: infrastructure.IMessage) => message match {
+  case (): infrastructure.StartMessage() => {
+    implicit val timeout: akka.util.Timeout = util.this.Timeout.durationToTimeout(scala.concurrent.duration.`package`.DurationInt(99999).seconds);
+    implicit val ec: scala.concurrent.ExecutionContextExecutor = context.executionContext;
+    implicit val scheduler: akka.actor.typed.Scheduler = context.system.scheduler;
+    Agent.this.initGoals()(executionContext).foreach[infrastructure.IMessage](((struct: bb.expstyla.exp.StructTerm) => {
+      val result: scala.concurrent.Future[infrastructure.IMessage] = akka.actor.typed.scaladsl.AskPattern.Askable[infrastructure.ISubGoalMessage](initiator).ask[infrastructure.IMessage](((ref: akka.actor.typed.ActorRef[infrastructure.IMessage]) => {
+        val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(struct, infrastructure.AkkaMessageSource.apply(ref))(executionContext);
+        if (subGoal.isDefined)
+          subGoal.get
+        else
+          throw new scala.`package`.RuntimeException(("No plan for initial goal ".+(struct): String))
+      }))(timeout, scheduler);
+      result.onComplete[infrastructure.Message[infrastructure.IMessageSource] with Product with java.io.Serializable](((x0$1: scala.util.Try[infrastructure.IMessage]) => x0$1 match {
+        case (value: infrastructure.IMessage): scala.util.Success[infrastructure.IMessage]((src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _))) => infrastructure.IntentionDoneMessage.apply(r)
+        case (exception: Throwable): scala.util.Failure[infrastructure.IMessage](_) => {
+          <artifact> val x$1: Null(null) = null;
+          <artifact> val x$2: infrastructure.FailureCause = infrastructure.IntentionErrorMessage.apply$default$1;
+          infrastructure.IntentionErrorMessage.apply(x$2, null)
+        }
+      }))(ec);
+      scala.concurrent.Await.result[infrastructure.IMessage](result, timeout.duration)
+    }));
+    typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](initiator).!(infrastructure.InitEndMessage.apply(context.self));
+    Agent.this.normal_behavior()(executionContext)
+  }
+}))
+
+82
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+apply
+3537
+5888
+96
+akka.actor.typed.scaladsl.Behaviors.setup
+Apply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.setup[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage]) => {
+  val yp: infrastructure.IYellowPages = yellowPages;
+  val bb: bb.IBeliefBase[bb.expstyla.exp.GenericTerm] = worker.this.beliefBaseFactory.apply();
+  implicit val executionContext: infrastructure.ExecutionContext = infrastructure.ExecutionContext.apply(name, Agent.this.agent_type, context, yp, bb, context.log);
+  bb.assert(Agent.this.initBeliefs()(executionContext));
+  val initiator: akka.actor.typed.ActorRef[infrastructure.ISubGoalMessage] = context.spawn[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext), "initiator", context.spawn$default$3[Nothing]);
+  typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](MAS).!(infrastructure.ReadyMessage.apply(context.self));
+  akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage], message: infrastructure.IMessage) => message match {
+    case (): infrastructure.StartMessage() => {
+      implicit val timeout: akka.util.Timeout = util.this.Timeout.durationToTimeout(scala.concurrent.duration.`package`.DurationInt(99999).seconds);
+      implicit val ec: scala.concurrent.ExecutionContextExecutor = context.executionContext;
+      implicit val scheduler: akka.actor.typed.Scheduler = context.system.scheduler;
+      Agent.this.initGoals()(executionContext).foreach[infrastructure.IMessage](((struct: bb.expstyla.exp.StructTerm) => {
+        val result: scala.concurrent.Future[infrastructure.IMessage] = akka.actor.typed.scaladsl.AskPattern.Askable[infrastructure.ISubGoalMessage](initiator).ask[infrastructure.IMessage](((ref: akka.actor.typed.ActorRef[infrastructure.IMessage]) => {
+          val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(struct, infrastructure.AkkaMessageSource.apply(ref))(executionContext);
+          if (subGoal.isDefined)
+            subGoal.get
+          else
+            throw new scala.`package`.RuntimeException(("No plan for initial goal ".+(struct): String))
+        }))(timeout, scheduler);
+        result.onComplete[infrastructure.Message[infrastructure.IMessageSource] with Product with java.io.Serializable](((x0$1: scala.util.Try[infrastructure.IMessage]) => x0$1 match {
+          case (value: infrastructure.IMessage): scala.util.Success[infrastructure.IMessage]((src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _))) => infrastructure.IntentionDoneMessage.apply(r)
+          case (exception: Throwable): scala.util.Failure[infrastructure.IMessage](_) => {
+            <artifact> val x$1: Null(null) = null;
+            <artifact> val x$2: infrastructure.FailureCause = infrastructure.IntentionErrorMessage.apply$default$1;
+            infrastructure.IntentionErrorMessage.apply(x$2, null)
+          }
+        }))(ec);
+        scala.concurrent.Await.result[infrastructure.IMessage](result, timeout.duration)
+      }));
+      typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](initiator).!(infrastructure.InitEndMessage.apply(context.self));
+      Agent.this.normal_behavior()(executionContext)
+    }
+  }))
+}))
+
+83
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6074
+6075
+159
+<nosymbol>
+Literal
+false
+0
+false
+8
+
+84
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6109
+6136
+160
+asl.worker.Intention.apply
+Apply
+false
+0
+false
+worker.this.Intention.apply(executionContext)
+
+85
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6159
+6185
+160
+akka.actor.typed.SupervisorStrategy.restart
+Select
+false
+0
+false
+akka.actor.typed.SupervisorStrategy.restart
+
+86
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6089
+6186
+160
+akka.actor.typed.scaladsl.Behaviors.Supervise.onFailure
+ApplyToImplicitArgs
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.supervise[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext)).onFailure[Exception](akka.actor.typed.SupervisorStrategy.restart)((ClassTag.apply[Exception](classOf[java.lang.Exception]): scala.reflect.ClassTag[Exception]))
+
+87
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6050
+6187
+159
+akka.actor.typed.scaladsl.Routers.pool
+Apply
+false
+0
+false
+akka.actor.typed.scaladsl.Routers.pool[infrastructure.ISubGoalMessage](8)(akka.actor.typed.scaladsl.Behaviors.supervise[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext)).onFailure[Exception](akka.actor.typed.SupervisorStrategy.restart)((ClassTag.apply[Exception](classOf[java.lang.Exception]): scala.reflect.ClassTag[Exception])))
+
+88
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6231
+6247
+162
+<nosymbol>
+Literal
+false
+0
+false
+"intention-pool"
+
+89
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6219
+6219
+162
+akka.actor.typed.scaladsl.ActorContext.spawn$default$3
+TypeApply
+false
+0
+false
+context.spawn$default$3[Nothing]
+
+90
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6211
+6248
+162
+akka.actor.typed.scaladsl.ActorContext.spawn
+Apply
+false
+0
+false
+context.spawn[infrastructure.ISubGoalMessage](pool, "intention-pool", context.spawn$default$3[Nothing])
+
+91
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6385
+6387
+167
+<nosymbol>
+Literal
+false
+0
+false
+()
+
+92
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6554
+6590
+170
+scala.Any.asInstanceOf
+TypeApply
+false
+0
+false
+message.asInstanceOf[infrastructure.SubGoalMessage]
+
+93
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6545
+6590
+170
+akka.actor.typed.ActorRef.ActorRefOps.!
+Apply
+false
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](router).!(message.asInstanceOf[infrastructure.SubGoalMessage])
+
+94
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6737
+6764
+174
+asl.worker.Agent.create_goal_message
+ApplyToImplicitArgs
+false
+0
+false
+Agent.this.create_goal_message(t, ref)(executionContext)
+
+95
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6791
+6808
+176
+scala.Option.isDefined
+Select
+false
+0
+false
+subGoal.isDefined
+
+96
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6833
+6845
+177
+akka.actor.typed.scaladsl.ActorContext.self
+Select
+false
+0
+false
+context.self
+
+97
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6848
+6859
+177
+scala.Option.get
+Select
+false
+0
+false
+subGoal.get
+
+98
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6833
+6859
+177
+akka.actor.typed.ActorRef.ActorRefOps.!
+Apply
+false
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](context.self).!(subGoal.get)
+
+99
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6833
+6859
+177
+akka.actor.typed.ActorRef.ActorRefOps.!
+Block
+true
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](context.self).!(subGoal.get)
+
+100
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6909
+6948
+179
+infrastructure.AkkaMessageSource.src
+Select
+false
+0
+false
+ref.asInstanceOf[infrastructure.AkkaMessageSource].src
+
+101
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6973
+6988
+179
+infrastructure.NoPlanMessage.apply
+Apply
+false
+0
+false
+infrastructure.NoPlanMessage.apply()
+
+102
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+7007
+7034
+179
+akka.actor.typed.scaladsl.ActorContext.self
+Select
+false
+0
+false
+executionContext.agent.self
+
+103
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6989
+7035
+179
+infrastructure.AkkaMessageSource.apply
+Apply
+false
+0
+false
+infrastructure.AkkaMessageSource.apply(executionContext.agent.self)
+
+104
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6951
+7036
+179
+infrastructure.IntentionErrorMessage.apply
+Apply
+false
+0
+false
+infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self))
+
+105
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6909
+7036
+179
+akka.actor.typed.ActorRef.ActorRefOps.!
+Apply
+false
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](ref.asInstanceOf[infrastructure.AkkaMessageSource].src).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+
+106
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6909
+7036
+179
+akka.actor.typed.ActorRef.ActorRefOps.!
+Block
+true
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](ref.asInstanceOf[infrastructure.AkkaMessageSource].src).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+
+107
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+7086
+7100
+184
+akka.actor.typed.scaladsl.Behaviors.same
+TypeApply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.same[infrastructure.IMessage]
+
+108
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6259
+7111
+164
+akka.actor.typed.scaladsl.Behaviors.receive
+Apply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage], message: infrastructure.IMessage) => {
+  message match {
+    case (src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _)) => ()
+    case (p_goal: infrastructure.IGoal, p_params: infrastructure.IParams, p_src: infrastructure.IMessageSource): infrastructure.SubGoalMessage(_, _, _) => typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](router).!(message.asInstanceOf[infrastructure.SubGoalMessage])
+    case (p_content: Any, src: infrastructure.IMessageSource): infrastructure.GoalMessage((m @ _), (ref @ _)) => m match {
+      case (t @ (_: bb.expstyla.exp.StructTerm)) => {
+        val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(t, ref)(executionContext);
+        if (subGoal.isDefined)
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](context.self).!(subGoal.get)
+        else
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](ref.asInstanceOf[infrastructure.AkkaMessageSource].src).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+      }
+    }
+  };
+  akka.actor.typed.scaladsl.Behaviors.same[infrastructure.IMessage]
+}))
+
+109
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+Agent
+Class
+asl.worker.Agent
+normal_behavior
+6000
+7120
+157
+akka.actor.typed.scaladsl.Behaviors.setup
+Apply
+false
+0
+false
+akka.actor.typed.scaladsl.Behaviors.setup[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage]) => {
+  val pool: akka.actor.typed.scaladsl.PoolRouter[infrastructure.ISubGoalMessage] = akka.actor.typed.scaladsl.Routers.pool[infrastructure.ISubGoalMessage](8)(akka.actor.typed.scaladsl.Behaviors.supervise[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext)).onFailure[Exception](akka.actor.typed.SupervisorStrategy.restart)((ClassTag.apply[Exception](classOf[java.lang.Exception]): scala.reflect.ClassTag[Exception])));
+  val router: akka.actor.typed.ActorRef[infrastructure.ISubGoalMessage] = context.spawn[infrastructure.ISubGoalMessage](pool, "intention-pool", context.spawn$default$3[Nothing]);
+  akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage], message: infrastructure.IMessage) => {
+    message match {
+      case (src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _)) => ()
+      case (p_goal: infrastructure.IGoal, p_params: infrastructure.IParams, p_src: infrastructure.IMessageSource): infrastructure.SubGoalMessage(_, _, _) => typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](router).!(message.asInstanceOf[infrastructure.SubGoalMessage])
+      case (p_content: Any, src: infrastructure.IMessageSource): infrastructure.GoalMessage((m @ _), (ref @ _)) => m match {
+        case (t @ (_: bb.expstyla.exp.StructTerm)) => {
+          val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(t, ref)(executionContext);
+          if (subGoal.isDefined)
+            typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](context.self).!(subGoal.get)
+          else
+            typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](ref.asInstanceOf[infrastructure.AkkaMessageSource].src).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        }
+      }
+    };
+    akka.actor.typed.scaladsl.Behaviors.same[infrastructure.IMessage]
+  }))
+}))
+
+110
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7288
+7288
+193
+bb.expstyla.exp.VarMap.apply$default$1
+Select
+false
+0
+false
+bb.expstyla.exp.VarMap.apply$default$1
+
+111
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7288
+7296
+193
+bb.expstyla.exp.VarMap.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.VarMap.apply(bb.expstyla.exp.VarMap.apply$default$1)
+
+112
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7355
+7367
+196
+bb.expstyla.exp.VarMap.clear
+Apply
+false
+0
+false
+vars.clear()
+
+113
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7404
+7414
+197
+<nosymbol>
+Literal
+false
+0
+false
+"NThreads"
+
+114
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7418
+7436
+197
+scala.collection.LinearSeqOps.apply
+Apply
+false
+0
+false
+params.l_params.apply(0)
+
+115
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7404
+7436
+197
+scala.Predef.ArrowAssoc.->
+Apply
+false
+0
+false
+scala.Predef.ArrowAssoc[String]("NThreads").->[bb.expstyla.exp.GenericTerm](params.l_params.apply(0))
+
+116
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7393
+7437
+197
+bb.expstyla.exp.VarMap.+=
+Apply
+false
+0
+false
+vars.+=(scala.Predef.ArrowAssoc[String]("NThreads").->[bb.expstyla.exp.GenericTerm](params.l_params.apply(0)))
+
+117
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7518
+7521
+199
+<nosymbol>
+Literal
+false
+0
+false
+">"
+
+118
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7539
+7555
+199
+bb.expstyla.exp.VarMap.apply
+Apply
+false
+0
+false
+vars.apply("NThreads")
+
+119
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7556
+7566
+199
+bb.expstyla.exp.IntTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.IntTerm.apply(1)
+
+120
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7522
+7567
+199
+scala.collection.SeqFactory.Delegate.apply
+Apply
+false
+0
+false
+scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply("NThreads"), bb.expstyla.exp.IntTerm.apply(1))
+
+121
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7507
+7568
+199
+bb.expstyla.exp.StructTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.StructTerm.apply(">", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply("NThreads"), bb.expstyla.exp.IntTerm.apply(1)))
+
+122
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7473
+7569
+199
+bb.IBeliefBase.query
+Apply
+false
+0
+false
+executionContext.beliefBase.query(bb.expstyla.exp.StructTerm.apply(">", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply("NThreads"), bb.expstyla.exp.IntTerm.apply(1))))
+
+123
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7600
+7609
+201
+infrastructure.QueryResponse.result
+Select
+false
+0
+false
+r0.result
+
+124
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7693
+7720
+202
+scala.Any.asInstanceOf
+TypeApply
+false
+0
+false
+v.asInstanceOf[bb.expstyla.exp.GenericTerm]
+
+125
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7688
+7720
+202
+scala.Predef.ArrowAssoc.->
+Apply
+false
+0
+false
+scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm])
+
+126
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7679
+7721
+202
+bb.expstyla.exp.VarMap.+=
+Apply
+false
+0
+false
+vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+
+127
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7642
+7723
+202
+scala.collection.IterableOnceOps.foreach
+Apply
+false
+0
+false
+r0.bindings.foreach[bb.expstyla.exp.VarMap](((x0$1: (String, bb.expstyla.exp.GenericTerm)) => x0$1 match {
+  case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) => vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+}))
+
+128
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7753
+7764
+203
+asl.worker.init_1.plan0
+ApplyToImplicitArgs
+false
+0
+false
+init_1.this.plan0(vars)(executionContext)
+
+129
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7794
+7800
+204
+<nosymbol>
+Literal
+false
+0
+false
+()
+
+130
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7611
+7828
+201
+<nosymbol>
+Block
+true
+0
+false
+{
+  r0.bindings.foreach[bb.expstyla.exp.VarMap](((x0$1: (String, bb.expstyla.exp.GenericTerm)) => x0$1 match {
+    case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) => vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+  }));
+  init_1.this.plan0(vars)(executionContext);
+  return ()
+}
+
+131
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7596
+7596
+201
+<nosymbol>
+Literal
+false
+0
+false
+()
+
+132
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7596
+7596
+201
+<nosymbol>
+Block
+true
+0
+false
+()
+
+133
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7885
+7947
+210
+infrastructure.AkkaMessageSource.address
+Apply
+false
+0
+false
+executionContext.src.asInstanceOf[infrastructure.AkkaMessageSource].address()
+
+134
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7972
+7997
+210
+infrastructure.NoApplicablePlanMessage.apply
+Apply
+false
+0
+false
+infrastructure.NoApplicablePlanMessage.apply()
+
+135
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+8016
+8043
+210
+akka.actor.typed.scaladsl.ActorContext.self
+Select
+false
+0
+false
+executionContext.agent.self
+
+136
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7998
+8044
+210
+infrastructure.AkkaMessageSource.apply
+Apply
+false
+0
+false
+infrastructure.AkkaMessageSource.apply(executionContext.agent.self)
+
+137
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7950
+8045
+210
+infrastructure.IntentionErrorMessage.apply
+Apply
+false
+0
+false
+infrastructure.IntentionErrorMessage.apply(infrastructure.NoApplicablePlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self))
+
+138
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+execute
+7885
+8045
+210
+akka.actor.typed.ActorRef.ActorRefOps.!
+Apply
+false
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](executionContext.src.asInstanceOf[infrastructure.AkkaMessageSource].address()).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoApplicablePlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+
+139
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8213
+8216
+217
+<nosymbol>
+Literal
+false
+0
+false
+"N"
+
+140
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8233
+8241
+217
+<nosymbol>
+Literal
+false
+0
+false
+"thread"
+
+141
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8282
+8302
+217
+bb.expstyla.exp.StringTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.StringTerm.apply("thread")
+
+142
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8282
+8302
+217
+std.converters.Term2String
+ApplyImplicitView
+false
+0
+false
+std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("thread"))
+
+143
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8303
+8317
+217
+bb.expstyla.exp.StringTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.StringTerm.apply("")
+
+144
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8303
+8317
+217
+std.converters.Term2String
+ApplyImplicitView
+false
+0
+false
+std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(""))
+
+145
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8249
+8318
+217
+java.lang.String.replaceAll
+Apply
+false
+0
+false
+executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("thread")), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("")))
+
+146
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8249
+8324
+217
+scala.collection.StringOps.toInt
+Select
+false
+0
+false
+scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("thread")), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("")))).toInt
+
+147
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8327
+8343
+217
+bb.expstyla.exp.VarMap.apply
+Apply
+false
+0
+false
+vars.apply("NThreads")
+
+148
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8348
+8358
+217
+bb.expstyla.exp.IntTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.IntTerm.apply(1)
+
+149
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8248
+8358
+217
+bb.expstyla.exp.GenericTerm.+
+Apply
+false
+0
+false
+std.converters.Native2Term(scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("thread")), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("")))).toInt).%(vars.apply("NThreads")).+(bb.expstyla.exp.IntTerm.apply(1))
+
+150
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8222
+8359
+217
+bb.expstyla.exp.GenericTerm.+
+Apply
+false
+0
+false
+bb.expstyla.exp.StringTerm.apply("thread").+(std.converters.Native2Term(scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("thread")), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("")))).toInt).%(vars.apply("NThreads")).+(bb.expstyla.exp.IntTerm.apply(1)))
+
+151
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8213
+8361
+217
+scala.Predef.ArrowAssoc.->
+Apply
+false
+0
+false
+scala.Predef.ArrowAssoc[String]("N").->[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.StringTerm.apply("thread").+(std.converters.Native2Term(scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("thread")), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("")))).toInt).%(vars.apply("NThreads")).+(bb.expstyla.exp.IntTerm.apply(1))))
+
+152
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8204
+8363
+217
+bb.expstyla.exp.VarMap.+=
+Apply
+false
+0
+false
+vars.+=(scala.Predef.ArrowAssoc[String]("N").->[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.StringTerm.apply("thread").+(std.converters.Native2Term(scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("thread")), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("")))).toInt).%(vars.apply("NThreads")).+(bb.expstyla.exp.IntTerm.apply(1)))))
+
+153
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8407
+8521
+218
+infrastructure.BeliefUpdateAction.execute
+ApplyToImplicitArgs
+false
+0
+false
+infrastructure.BeliefUpdateAction.execute(infrastructure.BeliefUpdateAction.Parameters.apply("+", bb.expstyla.exp.StructTerm.apply("neighbor", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply("N")))))(executionContext)
+
+154
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+init_1
+Object
+asl.worker.init_1
+plan0
+8433
+8433
+218
+<nosymbol>
+Literal
+false
+0
+false
+()
+
+155
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8713
+8713
+229
+bb.expstyla.exp.VarMap.apply$default$1
+Select
+false
+0
+false
+bb.expstyla.exp.VarMap.apply$default$1
+
+156
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8713
+8721
+229
+bb.expstyla.exp.VarMap.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.VarMap.apply(bb.expstyla.exp.VarMap.apply$default$1)
+
+157
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8780
+8792
+232
+bb.expstyla.exp.VarMap.clear
+Apply
+false
+0
+false
+vars.clear()
+
+158
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8827
+8830
+233
+<nosymbol>
+Literal
+false
+0
+false
+"0"
+
+159
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8834
+8852
+233
+scala.collection.LinearSeqOps.apply
+Apply
+false
+0
+false
+params.l_params.apply(0)
+
+160
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8827
+8852
+233
+scala.Predef.ArrowAssoc.->
+Apply
+false
+0
+false
+scala.Predef.ArrowAssoc[String]("0").->[bb.expstyla.exp.GenericTerm](params.l_params.apply(0))
+
+161
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8818
+8853
+233
+bb.expstyla.exp.VarMap.+=
+Apply
+false
+0
+false
+vars.+=(scala.Predef.ArrowAssoc[String]("0").->[bb.expstyla.exp.GenericTerm](params.l_params.apply(0)))
+
+162
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8939
+8946
+235
+<nosymbol>
+Literal
+false
+0
+false
+"token"
+
+163
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8964
+8974
+235
+bb.expstyla.exp.IntTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.IntTerm.apply(0)
+
+164
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8947
+8975
+235
+scala.collection.SeqFactory.Delegate.apply
+Apply
+false
+0
+false
+scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.IntTerm.apply(0))
+
+165
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8928
+8976
+235
+bb.expstyla.exp.StructTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.StructTerm.apply("token", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.IntTerm.apply(0)))
+
+166
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8988
+8995
+235
+<nosymbol>
+Literal
+false
+0
+false
+"token"
+
+167
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8996
+9011
+235
+infrastructure.Parameters.l_params
+Select
+false
+0
+false
+params.l_params
+
+168
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8977
+9012
+235
+bb.expstyla.exp.StructTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.StructTerm.apply("token", params.l_params)
+
+169
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+8889
+9013
+235
+bb.IBeliefBase.matchTerms
+Apply
+false
+0
+false
+executionContext.beliefBase.matchTerms(bb.expstyla.exp.StructTerm.apply("token", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.IntTerm.apply(0))), bb.expstyla.exp.StructTerm.apply("token", params.l_params))
+
+170
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9043
+9052
+236
+infrastructure.QueryResponse.result
+Select
+false
+0
+false
+m0.result
+
+171
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9158
+9185
+238
+scala.Any.asInstanceOf
+TypeApply
+false
+0
+false
+v.asInstanceOf[bb.expstyla.exp.GenericTerm]
+
+172
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9153
+9185
+238
+scala.Predef.ArrowAssoc.->
+Apply
+false
+0
+false
+scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm])
+
+173
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9144
+9186
+238
+bb.expstyla.exp.VarMap.+=
+Apply
+false
+0
+false
+vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+
+174
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9107
+9188
+238
+scala.collection.IterableOnceOps.foreach
+Apply
+false
+0
+false
+m0.bindings.foreach[bb.expstyla.exp.VarMap](((x0$1: (String, bb.expstyla.exp.GenericTerm)) => x0$1 match {
+  case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) => vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+}))
+
+175
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9219
+9230
+240
+asl.worker.token_1.plan0
+ApplyToImplicitArgs
+false
+0
+false
+token_1.this.plan0(vars)(executionContext)
+
+176
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9260
+9266
+241
+<nosymbol>
+Literal
+false
+0
+false
+()
+
+177
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9079
+9294
+237
+<nosymbol>
+Block
+true
+0
+false
+{
+  m0.bindings.foreach[bb.expstyla.exp.VarMap](((x0$1: (String, bb.expstyla.exp.GenericTerm)) => x0$1 match {
+    case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) => vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+  }));
+  token_1.this.plan0(vars)(executionContext);
+  return ()
+}
+
+178
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9040
+9040
+236
+<nosymbol>
+Literal
+false
+0
+false
+()
+
+179
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9040
+9040
+236
+<nosymbol>
+Block
+true
+0
+false
+()
+
+180
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9393
+9405
+246
+bb.expstyla.exp.VarMap.clear
+Apply
+false
+0
+false
+vars.clear()
+
+181
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9442
+9445
+247
+<nosymbol>
+Literal
+false
+0
+false
+"T"
+
+182
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9449
+9467
+247
+scala.collection.LinearSeqOps.apply
+Apply
+false
+0
+false
+params.l_params.apply(0)
+
+183
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9442
+9467
+247
+scala.Predef.ArrowAssoc.->
+Apply
+false
+0
+false
+scala.Predef.ArrowAssoc[String]("T").->[bb.expstyla.exp.GenericTerm](params.l_params.apply(0))
+
+184
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9431
+9468
+247
+bb.expstyla.exp.VarMap.+=
+Apply
+false
+0
+false
+vars.+=(scala.Predef.ArrowAssoc[String]("T").->[bb.expstyla.exp.GenericTerm](params.l_params.apply(0)))
+
+185
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9549
+9559
+249
+<nosymbol>
+Literal
+false
+0
+false
+"neighbor"
+
+186
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9577
+9586
+249
+bb.expstyla.exp.VarMap.apply
+Apply
+false
+0
+false
+vars.apply("N")
+
+187
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9560
+9587
+249
+scala.collection.SeqFactory.Delegate.apply
+Apply
+false
+0
+false
+scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply("N"))
+
+188
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9538
+9588
+249
+bb.expstyla.exp.StructTerm.apply
+Apply
+false
+0
+false
+bb.expstyla.exp.StructTerm.apply("neighbor", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply("N")))
+
+189
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9504
+9589
+249
+bb.IBeliefBase.query
+Apply
+false
+0
+false
+executionContext.beliefBase.query(bb.expstyla.exp.StructTerm.apply("neighbor", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply("N"))))
+
+190
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9620
+9629
+251
+infrastructure.QueryResponse.result
+Select
+false
+0
+false
+r1.result
+
+191
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9713
+9740
+252
+scala.Any.asInstanceOf
+TypeApply
+false
+0
+false
+v.asInstanceOf[bb.expstyla.exp.GenericTerm]
+
+192
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9708
+9740
+252
+scala.Predef.ArrowAssoc.->
+Apply
+false
+0
+false
+scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm])
+
+193
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9699
+9741
+252
+bb.expstyla.exp.VarMap.+=
+Apply
+false
+0
+false
+vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+
+194
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9662
+9743
+252
+scala.collection.IterableOnceOps.foreach
+Apply
+false
+0
+false
+r1.bindings.foreach[bb.expstyla.exp.VarMap](((x0$2: (String, bb.expstyla.exp.GenericTerm)) => x0$2 match {
+  case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) => vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+}))
+
+195
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9773
+9784
+253
+asl.worker.token_1.plan1
+ApplyToImplicitArgs
+false
+0
+false
+token_1.this.plan1(vars)(executionContext)
+
+196
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9814
+9820
+254
+<nosymbol>
+Literal
+false
+0
+false
+()
+
+197
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9631
+9848
+251
+<nosymbol>
+Block
+true
+0
+false
+{
+  r1.bindings.foreach[bb.expstyla.exp.VarMap](((x0$2: (String, bb.expstyla.exp.GenericTerm)) => x0$2 match {
+    case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) => vars.+=(scala.Predef.ArrowAssoc[String](k).->[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+  }));
+  token_1.this.plan1(vars)(executionContext);
+  return ()
+}
+
+198
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9616
+9616
+251
+<nosymbol>
+Literal
+false
+0
+false
+()
+
+199
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9616
+9616
+251
+<nosymbol>
+Block
+true
+0
+false
+()
+
+200
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9905
+9967
+260
+infrastructure.AkkaMessageSource.address
+Apply
+false
+0
+false
+executionContext.src.asInstanceOf[infrastructure.AkkaMessageSource].address()
+
+201
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9992
+10017
+260
+infrastructure.NoApplicablePlanMessage.apply
+Apply
+false
+0
+false
+infrastructure.NoApplicablePlanMessage.apply()
+
+202
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+10036
+10063
+260
+akka.actor.typed.scaladsl.ActorContext.self
+Select
+false
+0
+false
+executionContext.agent.self
+
+203
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+10018
+10064
+260
+infrastructure.AkkaMessageSource.apply
+Apply
+false
+0
+false
+infrastructure.AkkaMessageSource.apply(executionContext.agent.self)
+
+204
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9970
+10065
+260
+infrastructure.IntentionErrorMessage.apply
+Apply
+false
+0
+false
+infrastructure.IntentionErrorMessage.apply(infrastructure.NoApplicablePlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self))
+
+205
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+execute
+9905
+10065
+260
+akka.actor.typed.ActorRef.ActorRefOps.!
+Apply
+false
+0
+false
+typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](executionContext.src.asInstanceOf[infrastructure.AkkaMessageSource].address()).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoApplicablePlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+
+206
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+plan0
+10223
+10354
+267
+infrastructure.PrimitiveAction.execute
+ApplyToImplicitArgs
+false
+0
+false
+infrastructure.PrimitiveAction.execute(infrastructure.PrimitiveAction.Parameters.apply((() => {
+  worker.this.coms.achieve(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply("master")), bb.expstyla.exp.StructTerm.apply("done", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm]()))(executionContext);
+  ()
+})))(executionContext)
+
+207
+/home/msotafa/IdeaProjects/ASCTestProject/asctestproject/target/scala-2.13/src_managed/main/asl/worker.scala
+asl
+token_1
+Object
+asl.worker.token_1
+plan1
+10524
+10671
+273
+infrastructure.PrimitiveAction.execute
+ApplyToImplicitArgs
+false
+0
+false
+infrastructure.PrimitiveAction.execute(infrastructure.PrimitiveAction.Parameters.apply((() => {
+  worker.this.coms.achieve(std.converters.Term2String(vars.apply("N")), bb.expstyla.exp.StructTerm.apply("token", scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply("T").-(bb.expstyla.exp.IntTerm.apply(1)))))(executionContext);
+  ()
+})))(executionContext)
+

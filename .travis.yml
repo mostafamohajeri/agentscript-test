@@ -4,4 +4,7 @@ scala:
   - 2.13.3
 
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION clean test jacoco jacocoCoveralls
+  - sbt ++$TRAVIS_SCALA_VERSION clean coverage test
+
+after_success:
+  - sbt ++$TRAVIS_SCALA_VERSION coverageReport coveralls

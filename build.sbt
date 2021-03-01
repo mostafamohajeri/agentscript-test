@@ -26,29 +26,40 @@ resolvers += Resolver.bintrayRepo("uva-cci","styla-prolog")
 // You can define other libraries as dependencies in your build like this:
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
-
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.16.SNAP3"
-libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.16.SNAP3"
+resolvers += Resolver.mavenLocal
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_commons" % "0.2.17.SNAP6"
+libraryDependencies += "nl.uva.sne.cci" %% "agent_script_grounds" % "0.2.17.SNAP6"
 //libraryDependencies += "nl.uva.sne.cci" % "parser" % "0.2.14.SNAP3"
 //libraryDependencies += "nl.uva.sne.cci" % "scala-generator" % "0.2.14.SNAP3"
 libraryDependencies += "nl.uva.sne.cci" %% "stylaport" % "0.1.2"
+
+//libraryDependencies += "org.scalamock" %% "scalamock" % "5.1.0" % Test
+// https://mvnrepository.com/artifact/org.mockito/mockito-scala-scalatest
+libraryDependencies += "org.mockito" %% "mockito-scala-scalatest" % "1.16.29" % Test
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.3" % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion
 
-enablePlugins(JacocoCoverallsPlugin)
+//enablePlugins(JacocoCoverallsPlugin)
 enablePlugins(AgentScriptCCPlugin)
 
 (agentScriptCC / agentScriptCCPath) in Compile := (baseDirectory.value / "src" / "test" / "asl")
  Compile / sourceGenerators += (Compile / agentScriptCC).taskValue
-
+classLoaderLayeringStrategy in Test := ClassLoaderLayeringStrategy.ScalaLibrary
 parallelExecution in Test := false
 
-jacocoReportSettings := JacocoReportSettings(
-  "Jacoco Coverage Report",
-  None,
-  JacocoThresholds(),
-  Seq(JacocoReportFormats.ScalaHTML, JacocoReportFormats.XML),
-  "utf-8")
+//jacocoExcludes in Test := Seq(
+//  "*lzycompute*",
+//)
+//
+//jacocoReportSettings := JacocoReportSettings(
+//  "Jacoco Coverage Report",
+//  None,
+//  JacocoThresholds(),
+//  Seq(JacocoReportFormats.ScalaHTML, JacocoReportFormats.XML),
+//  "utf-8")
+//
+
+
 

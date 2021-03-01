@@ -1,0 +1,4767 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          asl/worker.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier, monospace;'>1 <span style=''>
+</span>2 <span style=''>            package asl
+</span>3 <span style=''>
+</span>4 <span style=''>            import _root_.scala.collection.mutable.HashMap
+</span>5 <span style=''>
+</span>6 <span style=''> import _root_.akka.actor.typed.{ActorRef, Behavior, SupervisorStrategy}
+</span>7 <span style=''> import _root_.akka.actor.typed.scaladsl.{ActorContext, Behaviors, Routers}
+</span>8 <span style=''> import java.util.logging.Logger
+</span>9 <span style=''> import _root_.scala.util.Failure
+</span>10 <span style=''> import _root_.scala.util.Success
+</span>11 <span style=''> import _root_.akka.util.Timeout
+</span>12 <span style=''> import _root_.scala.concurrent.duration._
+</span>13 <span style=''> import _root_.akka.actor.typed.scaladsl.AskPattern._
+</span>14 <span style=''> import _root_.scala.language.implicitConversions
+</span>15 <span style=''> import _root_.scala.concurrent.{Await, Future}
+</span>16 <span style=''> import _root_.scala.jdk.CollectionConverters._
+</span>17 <span style=''> import std.converters._
+</span>18 <span style=''>
+</span>19 <span style=''> import scala.util.Random
+</span>20 <span style=''> import bb._
+</span>21 <span style=''> import infrastructure._
+</span>22 <span style=''> import bb.expstyla.exp._
+</span>23 <span style=''> import std.{AgentCommunicationLayer, DefaultCommunications}
+</span>24 <span style=''>
+</span>25 <span style=''> class worker  (coms: AgentCommunicationLayer = new  DefaultCommunications,
+</span>26 <span style=''>                                     beliefBaseFactory: IBeliefBaseFactory = new StylaBeliefBaseFactory)
+</span>27 <span style=''>                      extends IntentionalAgentFactory {
+</span>28 <span style=''>
+</span>29 <span style=''>
+</span>30 <span style=''> object Intention {
+</span>31 <span style=''>
+</span>32 <span style=''>       def apply(p_executionContext: ExecutionContext): Behavior[ISubGoalMessage] = </span><span style='background: #AEF1AE'>Behaviors.setup { context =&gt;
+</span>33 <span style=''></span><span style='background: #AEF1AE'>
+</span>34 <span style=''></span><span style='background: #AEF1AE'>         Behaviors.receive {
+</span>35 <span style=''></span><span style='background: #AEF1AE'>         (context, message) =&gt;
+</span>36 <span style=''></span><span style='background: #AEF1AE'>
+</span>37 <span style=''></span><span style='background: #AEF1AE'>          implicit val executionContext = p_executionContext.copy(intention = context, src = message.source)
+</span>38 <span style=''></span><span style='background: #AEF1AE'>
+</span>39 <span style=''></span><span style='background: #AEF1AE'>         message match {
+</span>40 <span style=''></span><span style='background: #AEF1AE'>            case SubGoalMessage(_,_,r) =&gt;
+</span>41 <span style=''></span><span style='background: #AEF1AE'>               message.goal match {
+</span>42 <span style=''></span><span style='background: #AEF1AE'>
+</span>43 <span style=''></span><span style='background: #AEF1AE'>                   case worker.this.init_1 =&gt;
+</span>44 <span style=''></span><span style='background: #AEF1AE'>                     worker.this.init_1.execute(message.params.asInstanceOf[Parameters])
+</span>45 <span style=''></span><span style='background: #AEF1AE'>
+</span>46 <span style=''></span><span style='background: #AEF1AE'>                   case worker.this.token_1 =&gt;
+</span>47 <span style=''></span><span style='background: #AEF1AE'>                     worker.this.token_1.execute(message.params.asInstanceOf[Parameters])
+</span>48 <span style=''></span><span style='background: #AEF1AE'>
+</span>49 <span style=''></span><span style='background: #AEF1AE'>
+</span>50 <span style=''></span><span style='background: #AEF1AE'>           case _ =&gt;
+</span>51 <span style=''></span><span style='background: #AEF1AE'>             </span><span style='background: #F0ADAD'>context.log.error(&quot;This actor can not handle goal of type {}&quot;, message.goal)</span><span style='background: #AEF1AE'>
+</span>52 <span style=''></span><span style='background: #AEF1AE'>         }
+</span>53 <span style=''></span><span style='background: #AEF1AE'>           r match {
+</span>54 <span style=''></span><span style='background: #AEF1AE'>                 case a : AkkaMessageSource =&gt; 
+</span>55 <span style=''></span><span style='background: #AEF1AE'>                   a.src ! IntentionDoneMessage(AkkaMessageSource(executionContext.agent.self))
+</span>56 <span style=''></span><span style='background: #AEF1AE'>                 case DummyMessageSource(_) =&gt; 
+</span>57 <span style=''></span><span style='background: #AEF1AE'>                   </span><span style='background: #F0ADAD'>context.log.error(&quot;Intention Done!&quot;)</span><span style='background: #AEF1AE'>
+</span>58 <span style=''></span><span style='background: #AEF1AE'>               }
+</span>59 <span style=''></span><span style='background: #AEF1AE'>
+</span>60 <span style=''></span><span style='background: #AEF1AE'>               Behaviors.same
+</span>61 <span style=''></span><span style='background: #AEF1AE'>             case InitEndMessage(r) =&gt;
+</span>62 <span style=''></span><span style='background: #AEF1AE'>               Behaviors.stopped
+</span>63 <span style=''></span><span style='background: #AEF1AE'>       }
+</span>64 <span style=''></span><span style='background: #AEF1AE'>      }
+</span>65 <span style=''></span><span style='background: #AEF1AE'>     }</span><span style=''>
+</span>66 <span style=''>     }
+</span>67 <span style=''>
+</span>68 <span style=''> override def agentBuilder: Agent = </span><span style='background: #AEF1AE'>new Agent()</span><span style=''>
+</span>69 <span style=''> class Agent extends IAgent {
+</span>70 <span style=''>
+</span>71 <span style=''>         override def agent_type: String = </span><span style='background: #AEF1AE'>&quot;worker&quot;</span><span style=''>
+</span>72 <span style=''>
+</span>73 <span style=''>         var vars = </span><span style='background: #AEF1AE'>VarMap()</span><span style=''>
+</span>74 <span style=''>
+</span>75 <span style=''>         def initGoals()(implicit executionContext: ExecutionContext) = </span><span style='background: #AEF1AE'>List[StructTerm](
+</span>76 <span style=''></span><span style='background: #AEF1AE'>         )</span><span style=''>
+</span>77 <span style=''>
+</span>78 <span style=''>         def initBeliefs()(implicit executionContext: ExecutionContext) = </span><span style='background: #AEF1AE'>List[StructTerm](
+</span>79 <span style=''></span><span style='background: #AEF1AE'>         )</span><span style=''>
+</span>80 <span style=''>
+</span>81 <span style=''>         def create_goal_message(t: StructTerm, ref: IMessageSource) (implicit executionContext: ExecutionContext): Option[SubGoalMessage] = {
+</span>82 <span style=''>                     if(</span><span style='background: #AEF1AE'>t.matchOnlyFunctorAndArity(&quot;init&quot;,1)</span><span style=''>) </span><span style='background: #AEF1AE'>{
+</span>83 <span style=''></span><span style='background: #AEF1AE'>           //          if(t.functor==&quot;init&quot; &amp;&amp; t.terms.size == 1 ) {
+</span>84 <span style=''></span><span style='background: #AEF1AE'>                       val args: Parameters = Parameters(t.terms.toList)
+</span>85 <span style=''></span><span style='background: #AEF1AE'>                       Option(SubGoalMessage(init_1, args, ref))
+</span>86 <span style=''></span><span style='background: #AEF1AE'>                     }</span><span style=''> else </span><span style='background: #AEF1AE'>if(t.matchOnlyFunctorAndArity(&quot;token&quot;,1)) {
+</span>87 <span style=''></span><span style='background: #AEF1AE'>           //          if(t.functor==&quot;token&quot; &amp;&amp; t.terms.size == 1 ) {
+</span>88 <span style=''></span><span style='background: #AEF1AE'>                       val args: Parameters = Parameters(t.terms.toList)
+</span>89 <span style=''></span><span style='background: #AEF1AE'>                       Option(SubGoalMessage(token_1, args, ref))
+</span>90 <span style=''></span><span style='background: #AEF1AE'>                     } else  {
+</span>91 <span style=''></span><span style='background: #AEF1AE'>             Option.empty[SubGoalMessage]
+</span>92 <span style=''></span><span style='background: #AEF1AE'>             }</span><span style=''>
+</span>93 <span style=''>         }
+</span>94 <span style=''>
+</span>95 <span style=''>      def apply(name: String, yellowPages: IYellowPages, MAS: ActorRef[IMessage]): Behavior[IMessage] = {
+</span>96 <span style=''>           </span><span style='background: #AEF1AE'>Behaviors.setup { context =&gt;
+</span>97 <span style=''></span><span style='background: #AEF1AE'>             val yp: IYellowPages = yellowPages
+</span>98 <span style=''></span><span style='background: #AEF1AE'>             val bb: IBeliefBase[GenericTerm] = beliefBaseFactory()
+</span>99 <span style=''></span><span style='background: #AEF1AE'>             implicit val executionContext: ExecutionContext = ExecutionContext(name, agent_type, context, yp, bb, context.log)
+</span>100 <span style=''></span><span style='background: #AEF1AE'>             bb.assert(initBeliefs)
+</span>101 <span style=''></span><span style='background: #AEF1AE'>
+</span>102 <span style=''></span><span style='background: #AEF1AE'>         val initiator = context.spawn(Intention(executionContext), &quot;initiator&quot;)
+</span>103 <span style=''></span><span style='background: #AEF1AE'>
+</span>104 <span style=''></span><span style='background: #AEF1AE'>         MAS ! ReadyMessage(context.self)
+</span>105 <span style=''></span><span style='background: #AEF1AE'>         Behaviors.receive {
+</span>106 <span style=''></span><span style='background: #AEF1AE'>           (context, message) =&gt;
+</span>107 <span style=''></span><span style='background: #AEF1AE'>             message match {
+</span>108 <span style=''></span><span style='background: #AEF1AE'>               case StartMessage() =&gt;
+</span>109 <span style=''></span><span style='background: #AEF1AE'>
+</span>110 <span style=''></span><span style='background: #AEF1AE'>
+</span>111 <span style=''></span><span style='background: #AEF1AE'>                 implicit val timeout: Timeout = 99999.seconds
+</span>112 <span style=''></span><span style='background: #AEF1AE'>                 implicit val ec = context.executionContext
+</span>113 <span style=''></span><span style='background: #AEF1AE'>                 implicit val scheduler = context.system.scheduler
+</span>114 <span style=''></span><span style='background: #AEF1AE'>
+</span>115 <span style=''></span><span style='background: #AEF1AE'>
+</span>116 <span style=''></span><span style='background: #AEF1AE'>                 //              initGoals.foreach( tuple =&gt; initiator ! SubGoalMessage(tuple._1,tuple._2,context.self))
+</span>117 <span style=''></span><span style='background: #AEF1AE'>                 initGoals.foreach(struct =&gt; {
+</span>118 <span style=''></span><span style='background: #AEF1AE'>
+</span>119 <span style=''></span><span style='background: #AEF1AE'>
+</span>120 <span style=''></span><span style='background: #AEF1AE'>                   val result: Future[IMessage] = </span><span style='background: #F0ADAD'>initiator.ask[IMessage](ref =&gt; {
+</span>121 <span style=''></span><span style='background: #F0ADAD'>                     val subGoal = create_goal_message(struct, AkkaMessageSource(ref))
+</span>122 <span style=''></span><span style='background: #F0ADAD'>                     if (subGoal.isDefined)
+</span>123 <span style=''></span><span style='background: #F0ADAD'>                       subGoal.get
+</span>124 <span style=''></span><span style='background: #F0ADAD'>                     else
+</span>125 <span style=''></span><span style='background: #F0ADAD'>                       throw new RuntimeException(s&quot;No plan for initial goal $struct&quot;)
+</span>126 <span style=''></span><span style='background: #F0ADAD'>                     }
+</span>127 <span style=''></span><span style='background: #F0ADAD'>                   )</span><span style='background: #AEF1AE'>
+</span>128 <span style=''></span><span style='background: #AEF1AE'>
+</span>129 <span style=''></span><span style='background: #AEF1AE'>
+</span>130 <span style=''></span><span style='background: #AEF1AE'>                   </span><span style='background: #F0ADAD'>result.onComplete {
+</span>131 <span style=''></span><span style='background: #F0ADAD'>                     case Success(IntentionDoneMessage(r)) =&gt; IntentionDoneMessage(r)
+</span>132 <span style=''></span><span style='background: #F0ADAD'>                     case Failure(_) =&gt; IntentionErrorMessage(src = null)
+</span>133 <span style=''></span><span style='background: #F0ADAD'>                   }</span><span style='background: #AEF1AE'>
+</span>134 <span style=''></span><span style='background: #AEF1AE'>
+</span>135 <span style=''></span><span style='background: #AEF1AE'>                   </span><span style='background: #F0ADAD'>Await.result(result, timeout.duration)</span><span style='background: #AEF1AE'>
+</span>136 <span style=''></span><span style='background: #AEF1AE'>
+</span>137 <span style=''></span><span style='background: #AEF1AE'>                   //                context.ask[ISubGoalMessage, IMessage](initiator, ref =&gt; SubGoalMessage(tuple._1, tuple._2,name, ref)) {
+</span>138 <span style=''></span><span style='background: #AEF1AE'>                   //                  case Success(IntentionDoneMessage(_, _)) =&gt; IntentionDoneMessage()
+</span>139 <span style=''></span><span style='background: #AEF1AE'>                   //                  case Failure(_) =&gt; IntentionErrorMessage()
+</span>140 <span style=''></span><span style='background: #AEF1AE'>                   //                }
+</span>141 <span style=''></span><span style='background: #AEF1AE'>                 }
+</span>142 <span style=''></span><span style='background: #AEF1AE'>                 )
+</span>143 <span style=''></span><span style='background: #AEF1AE'>
+</span>144 <span style=''></span><span style='background: #AEF1AE'>                 initiator ! InitEndMessage(context.self)
+</span>145 <span style=''></span><span style='background: #AEF1AE'>                 normal_behavior()
+</span>146 <span style=''></span><span style='background: #AEF1AE'>
+</span>147 <span style=''></span><span style='background: #AEF1AE'>               //            case InitEndMessage(_) =&gt;
+</span>148 <span style=''></span><span style='background: #AEF1AE'>               //              context.log.debug(f&quot;$name: I have started, switching behavior&quot;)
+</span>149 <span style=''></span><span style='background: #AEF1AE'>               //              normal_behavior()
+</span>150 <span style=''></span><span style='background: #AEF1AE'>             }
+</span>151 <span style=''></span><span style='background: #AEF1AE'>
+</span>152 <span style=''></span><span style='background: #AEF1AE'>         }
+</span>153 <span style=''></span><span style='background: #AEF1AE'>       }</span><span style=''>
+</span>154 <span style=''>     }
+</span>155 <span style=''>
+</span>156 <span style=''>     def normal_behavior()(implicit executionContext: ExecutionContext): Behavior[IMessage] = {
+</span>157 <span style=''>       </span><span style='background: #AEF1AE'>Behaviors.setup { context =&gt;
+</span>158 <span style=''></span><span style='background: #AEF1AE'>
+</span>159 <span style=''></span><span style='background: #AEF1AE'>         val pool = Routers.pool(poolSize = 8)(
+</span>160 <span style=''></span><span style='background: #AEF1AE'>           Behaviors.supervise(Intention(executionContext)).onFailure[Exception](SupervisorStrategy.restart))
+</span>161 <span style=''></span><span style='background: #AEF1AE'>
+</span>162 <span style=''></span><span style='background: #AEF1AE'>         val router = context.spawn(pool, &quot;intention-pool&quot;)
+</span>163 <span style=''></span><span style='background: #AEF1AE'>
+</span>164 <span style=''></span><span style='background: #AEF1AE'>         Behaviors.receive {
+</span>165 <span style=''></span><span style='background: #AEF1AE'>           (context, message) =&gt;
+</span>166 <span style=''></span><span style='background: #AEF1AE'>             message match {
+</span>167 <span style=''></span><span style='background: #AEF1AE'>               case IntentionDoneMessage(r) </span><span style='background: #F0ADAD'>=&gt;</span><span style='background: #AEF1AE'>
+</span>168 <span style=''></span><span style='background: #AEF1AE'>               //context.log.debug(f&quot;${executionContext.name}: an intention was done by $s&quot;)
+</span>169 <span style=''></span><span style='background: #AEF1AE'>               case SubGoalMessage(_, _, _) =&gt;
+</span>170 <span style=''></span><span style='background: #AEF1AE'>                 router ! message.asInstanceOf[SubGoalMessage]
+</span>171 <span style=''></span><span style='background: #AEF1AE'>               case GoalMessage(m, ref) =&gt;
+</span>172 <span style=''></span><span style='background: #AEF1AE'>                 m match {
+</span>173 <span style=''></span><span style='background: #AEF1AE'>                   case t: StructTerm =&gt;
+</span>174 <span style=''></span><span style='background: #AEF1AE'>                     val subGoal = create_goal_message(t, ref)
+</span>175 <span style=''></span><span style='background: #AEF1AE'>
+</span>176 <span style=''></span><span style='background: #AEF1AE'>                     if (subGoal.isDefined)
+</span>177 <span style=''></span><span style='background: #AEF1AE'>                       context.self ! subGoal.get
+</span>178 <span style=''></span><span style='background: #AEF1AE'>                     else
+</span>179 <span style=''></span><span style='background: #AEF1AE'>                       ref.asInstanceOf[AkkaMessageSource].src ! IntentionErrorMessage(NoPlanMessage(),AkkaMessageSource(executionContext.agent.self))
+</span>180 <span style=''></span><span style='background: #AEF1AE'>
+</span>181 <span style=''></span><span style='background: #AEF1AE'>
+</span>182 <span style=''></span><span style='background: #AEF1AE'>                 }
+</span>183 <span style=''></span><span style='background: #AEF1AE'>             }
+</span>184 <span style=''></span><span style='background: #AEF1AE'>             Behaviors.same
+</span>185 <span style=''></span><span style='background: #AEF1AE'>         }
+</span>186 <span style=''></span><span style='background: #AEF1AE'>       }</span><span style=''>
+</span>187 <span style=''>     }
+</span>188 <span style=''>   }
+</span>189 <span style=''>
+</span>190 <span style=''>      object init_1 extends IGoal {
+</span>191 <span style=''>
+</span>192 <span style=''>        def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
+</span>193 <span style=''>         var vars = </span><span style='background: #AEF1AE'>VarMap()</span><span style=''>
+</span>194 <span style=''>                 //plan 0 start
+</span>195 <span style=''>
+</span>196 <span style=''>                         </span><span style='background: #AEF1AE'>vars.clear()</span><span style=''>
+</span>197 <span style=''>                         </span><span style='background: #AEF1AE'>vars +=(   &quot;NThreads&quot; -&gt; params.l_params(0))</span><span style=''>
+</span>198 <span style=''>
+</span>199 <span style=''>                         val r0 = </span><span style='background: #AEF1AE'>executionContext.beliefBase.query(StructTerm(&quot;&gt;&quot;,Seq[GenericTerm](vars(&quot;NThreads&quot;),IntTerm(1))))</span><span style=''>
+</span>200 <span style=''>
+</span>201 <span style=''>                         if (</span><span style='background: #AEF1AE'>r0.result</span><span style=''>) </span><span style='background: #AEF1AE'>{
+</span>202 <span style=''></span><span style='background: #AEF1AE'>                             r0.bindings foreach { case (k, v) =&gt; </span><span style='background: #F0ADAD'>vars += (k -&gt; v.asInstanceOf[GenericTerm])</span><span style='background: #AEF1AE'> }
+</span>203 <span style=''></span><span style='background: #AEF1AE'>                             plan0(vars)
+</span>204 <span style=''></span><span style='background: #AEF1AE'>                             return
+</span>205 <span style=''></span><span style='background: #AEF1AE'>                          }</span><span style=''>
+</span>206 <span style=''>
+</span>207 <span style=''>                          // plan 0 end
+</span>208 <span style=''>
+</span>209 <span style=''>
+</span>210 <span style=''>             </span><span style='background: #AEF1AE'>executionContext.src.asInstanceOf[AkkaMessageSource].address() ! IntentionErrorMessage(NoApplicablePlanMessage(),AkkaMessageSource(executionContext.agent.self))</span><span style=''>
+</span>211 <span style=''>
+</span>212 <span style=''>        }
+</span>213 <span style=''>
+</span>214 <span style=''>
+</span>215 <span style=''>                      def plan0(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
+</span>216 <span style=''>
+</span>217 <span style=''>                                           </span><span style='background: #AEF1AE'>vars += (&quot;N&quot; -&gt;  (StringTerm(&quot;thread&quot;) +  ( (executionContext.name.replaceAll(StringTerm(&quot;thread&quot;),StringTerm(&quot;&quot;)).toInt % vars(&quot;NThreads&quot;))  + IntTerm(1)) ) )</span><span style=''>
+</span>218 <span style=''>                                           </span><span style='background: #AEF1AE'>BeliefUpdateAction.execute(BeliefUpdateAction.Parameters(&quot;+&quot;, StructTerm(&quot;neighbor&quot;,Seq[GenericTerm](vars(&quot;N&quot;)))))</span><span style=''>
+</span>219 <span style=''>
+</span>220 <span style=''>
+</span>221 <span style=''>                     }
+</span>222 <span style=''>
+</span>223 <span style=''>
+</span>224 <span style=''>      }
+</span>225 <span style=''>
+</span>226 <span style=''>      object token_1 extends IGoal {
+</span>227 <span style=''>
+</span>228 <span style=''>        def execute(params: Parameters) (implicit executionContext: ExecutionContext) : Unit = {
+</span>229 <span style=''>         var vars = </span><span style='background: #AEF1AE'>VarMap()</span><span style=''>
+</span>230 <span style=''>                 //plan 0 start
+</span>231 <span style=''>
+</span>232 <span style=''>                         </span><span style='background: #AEF1AE'>vars.clear()</span><span style=''>
+</span>233 <span style=''>                         </span><span style='background: #AEF1AE'>vars +=( &quot;0&quot; -&gt; params.l_params(0))</span><span style=''>
+</span>234 <span style=''>
+</span>235 <span style=''>                         val m0 = </span><span style='background: #AEF1AE'>executionContext.beliefBase.matchTerms(StructTerm(&quot;token&quot;,Seq[GenericTerm](IntTerm(0))),StructTerm(&quot;token&quot;,params.l_params))</span><span style=''>;
+</span>236 <span style=''>                         if(</span><span style='background: #AEF1AE'>m0.result</span><span style=''>)
+</span>237 <span style=''>                         </span><span style='background: #AEF1AE'>{
+</span>238 <span style=''></span><span style='background: #AEF1AE'>                          m0.bindings foreach { case (k, v) =&gt; </span><span style='background: #F0ADAD'>vars += (k -&gt; v.asInstanceOf[GenericTerm])</span><span style='background: #AEF1AE'> }
+</span>239 <span style=''></span><span style='background: #AEF1AE'>
+</span>240 <span style=''></span><span style='background: #AEF1AE'>                             plan0(vars)
+</span>241 <span style=''></span><span style='background: #AEF1AE'>                             return
+</span>242 <span style=''></span><span style='background: #AEF1AE'>                          }</span><span style=''>
+</span>243 <span style=''>                          // plan 0 end
+</span>244 <span style=''>                 //plan 1 start
+</span>245 <span style=''>
+</span>246 <span style=''>                         </span><span style='background: #AEF1AE'>vars.clear()</span><span style=''>
+</span>247 <span style=''>                         </span><span style='background: #AEF1AE'>vars +=(   &quot;T&quot; -&gt; params.l_params(0))</span><span style=''>
+</span>248 <span style=''>
+</span>249 <span style=''>                         val r1 = </span><span style='background: #AEF1AE'>executionContext.beliefBase.query(StructTerm(&quot;neighbor&quot;,Seq[GenericTerm](vars(&quot;N&quot;))))</span><span style=''>
+</span>250 <span style=''>
+</span>251 <span style=''>                         if (</span><span style='background: #AEF1AE'>r1.result</span><span style=''>) </span><span style='background: #AEF1AE'>{
+</span>252 <span style=''></span><span style='background: #AEF1AE'>                             r1.bindings foreach { case (k, v) =&gt; vars += (k -&gt; v.asInstanceOf[GenericTerm]) }
+</span>253 <span style=''></span><span style='background: #AEF1AE'>                             plan1(vars)
+</span>254 <span style=''></span><span style='background: #AEF1AE'>                             return
+</span>255 <span style=''></span><span style='background: #AEF1AE'>                          }</span><span style=''>
+</span>256 <span style=''>
+</span>257 <span style=''>                          // plan 1 end
+</span>258 <span style=''>
+</span>259 <span style=''>
+</span>260 <span style=''>             </span><span style='background: #AEF1AE'>executionContext.src.asInstanceOf[AkkaMessageSource].address() ! IntentionErrorMessage(NoApplicablePlanMessage(),AkkaMessageSource(executionContext.agent.self))</span><span style=''>
+</span>261 <span style=''>
+</span>262 <span style=''>        }
+</span>263 <span style=''>
+</span>264 <span style=''>
+</span>265 <span style=''>                      def plan0(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
+</span>266 <span style=''>
+</span>267 <span style=''>                                          </span><span style='background: #AEF1AE'>PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; coms.achieve(StringTerm(&quot;master&quot;),StructTerm(&quot;done&quot;,Seq[GenericTerm]()))))</span><span style=''>
+</span>268 <span style=''>
+</span>269 <span style=''>
+</span>270 <span style=''>                     }
+</span>271 <span style=''>                      def plan1(vars: VarMap)(implicit executionContext: ExecutionContext): Unit = {
+</span>272 <span style=''>
+</span>273 <span style=''>                                          </span><span style='background: #AEF1AE'>PrimitiveAction.execute(PrimitiveAction.Parameters(() =&gt; coms.achieve(vars(&quot;N&quot;),StructTerm(&quot;token&quot;,Seq[GenericTerm]( (vars(&quot;T&quot;) - IntTerm(1)) )))))</span><span style=''>
+</span>274 <span style=''>
+</span>275 <span style=''>
+</span>276 <span style=''>                     }
+</span>277 <span style=''>
+</span>278 <span style=''>
+</span>279 <span style=''>      }
+</span>280 <span style=''>
+</span>281 <span style=''>
+</span>282 <span style=''>
+</span>283 <span style=''>
+</span>284 <span style=''>
+</span>285 <span style=''> }
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          32
+        </td>
+        <td>
+          30
+        </td>
+        <td>
+          1134
+          -
+          2248
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.setup
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.setup[infrastructure.ISubGoalMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage]) =&gt; akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.ISubGoalMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage], message: infrastructure.ISubGoalMessage) =&gt; {
+  implicit val executionContext: infrastructure.ExecutionContext = {
+    &lt;artifact&gt; val x$1: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage] @scala.reflect.internal.annotations.uncheckedBounds = context;
+    &lt;artifact&gt; val x$2: infrastructure.IMessageSource = message.source;
+    &lt;artifact&gt; val x$3: String = p_executionContext.copy$default$1;
+    &lt;artifact&gt; val x$4: String = p_executionContext.copy$default$2;
+    &lt;artifact&gt; val x$5: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage] @scala.reflect.internal.annotations.uncheckedBounds = p_executionContext.copy$default$3;
+    &lt;artifact&gt; val x$6: infrastructure.IYellowPages = p_executionContext.copy$default$4;
+    &lt;artifact&gt; val x$7: bb.IBeliefBase[bb.expstyla.exp.GenericTerm] @scala.reflect.internal.annotations.uncheckedBounds = p_executionContext.copy$default$5;
+    &lt;artifact&gt; val x$8: org.slf4j.Logger = p_executionContext.copy$default$6;
+    p_executionContext.copy(x$3, x$4, x$5, x$6, x$7, x$8, x$1, x$2)
+  };
+  message match {
+    case (p_goal: infrastructure.IGoal, p_params: infrastructure.IParams, p_src: infrastructure.IMessageSource): infrastructure.SubGoalMessage(_, _, (r @ _)) =&gt; {
+      message.goal match {
+        case worker.this.init_1 =&gt; worker.this.init_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        case worker.this.token_1 =&gt; worker.this.token_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        case _ =&gt; context.log.error(&quot;This actor can not handle goal of type {}&quot;, message.goal)
+      };
+      r match {
+        case (a @ (_: infrastructure.AkkaMessageSource)) =&gt; typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](a.src).!(infrastructure.IntentionDoneMessage.apply(infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        case (p_name: String): infrastructure.DummyMessageSource(_) =&gt; context.log.error(&quot;Intention Done!&quot;)
+      };
+      akka.actor.typed.scaladsl.Behaviors.same[infrastructure.ISubGoalMessage]
+    }
+    case (p_src: akka.actor.typed.ActorRef[infrastructure.IMessage]): infrastructure.InitEndMessage((r @ _)) =&gt; akka.actor.typed.scaladsl.Behaviors.stopped[infrastructure.ISubGoalMessage]
+  }
+}))))
+        </td>
+      </tr><tr>
+        <td>
+          34
+        </td>
+        <td>
+          29
+        </td>
+        <td>
+          1173
+          -
+          2241
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.receive
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.ISubGoalMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage], message: infrastructure.ISubGoalMessage) =&gt; {
+  implicit val executionContext: infrastructure.ExecutionContext = {
+    &lt;artifact&gt; val x$1: akka.actor.typed.scaladsl.ActorContext[infrastructure.ISubGoalMessage] @scala.reflect.internal.annotations.uncheckedBounds = context;
+    &lt;artifact&gt; val x$2: infrastructure.IMessageSource = message.source;
+    &lt;artifact&gt; val x$3: String = p_executionContext.copy$default$1;
+    &lt;artifact&gt; val x$4: String = p_executionContext.copy$default$2;
+    &lt;artifact&gt; val x$5: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage] @scala.reflect.internal.annotations.uncheckedBounds = p_executionContext.copy$default$3;
+    &lt;artifact&gt; val x$6: infrastructure.IYellowPages = p_executionContext.copy$default$4;
+    &lt;artifact&gt; val x$7: bb.IBeliefBase[bb.expstyla.exp.GenericTerm] @scala.reflect.internal.annotations.uncheckedBounds = p_executionContext.copy$default$5;
+    &lt;artifact&gt; val x$8: org.slf4j.Logger = p_executionContext.copy$default$6;
+    p_executionContext.copy(x$3, x$4, x$5, x$6, x$7, x$8, x$1, x$2)
+  };
+  message match {
+    case (p_goal: infrastructure.IGoal, p_params: infrastructure.IParams, p_src: infrastructure.IMessageSource): infrastructure.SubGoalMessage(_, _, (r @ _)) =&gt; {
+      message.goal match {
+        case worker.this.init_1 =&gt; worker.this.init_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        case worker.this.token_1 =&gt; worker.this.token_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        case _ =&gt; context.log.error(&quot;This actor can not handle goal of type {}&quot;, message.goal)
+      };
+      r match {
+        case (a @ (_: infrastructure.AkkaMessageSource)) =&gt; typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](a.src).!(infrastructure.IntentionDoneMessage.apply(infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        case (p_name: String): infrastructure.DummyMessageSource(_) =&gt; context.log.error(&quot;Intention Done!&quot;)
+      };
+      akka.actor.typed.scaladsl.Behaviors.same[infrastructure.ISubGoalMessage]
+    }
+    case (p_src: akka.actor.typed.ActorRef[infrastructure.IMessage]): infrastructure.InitEndMessage((r @ _)) =&gt; akka.actor.typed.scaladsl.Behaviors.stopped[infrastructure.ISubGoalMessage]
+  }
+}))
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          8
+        </td>
+        <td>
+          1286
+          -
+          1286
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.ExecutionContext.copy$default$1
+        </td>
+        <td style="background: #AEF1AE">
+          p_executionContext.copy$default$1
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          11
+        </td>
+        <td>
+          1286
+          -
+          1286
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.ExecutionContext.copy$default$4
+        </td>
+        <td style="background: #AEF1AE">
+          p_executionContext.copy$default$4
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          14
+        </td>
+        <td>
+          1267
+          -
+          1333
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.ExecutionContext.copy
+        </td>
+        <td style="background: #AEF1AE">
+          p_executionContext.copy(x$3, x$4, x$5, x$6, x$7, x$8, x$1, x$2)
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          13
+        </td>
+        <td>
+          1286
+          -
+          1286
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.ExecutionContext.copy$default$6
+        </td>
+        <td style="background: #AEF1AE">
+          p_executionContext.copy$default$6
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          7
+        </td>
+        <td>
+          1318
+          -
+          1332
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.IMessage.source
+        </td>
+        <td style="background: #AEF1AE">
+          message.source
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          10
+        </td>
+        <td>
+          1286
+          -
+          1286
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.ExecutionContext.copy$default$3
+        </td>
+        <td style="background: #AEF1AE">
+          p_executionContext.copy$default$3
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          9
+        </td>
+        <td>
+          1286
+          -
+          1286
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.ExecutionContext.copy$default$2
+        </td>
+        <td style="background: #AEF1AE">
+          p_executionContext.copy$default$2
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          12
+        </td>
+        <td>
+          1286
+          -
+          1286
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.ExecutionContext.copy$default$5
+        </td>
+        <td style="background: #AEF1AE">
+          p_executionContext.copy$default$5
+        </td>
+      </tr><tr>
+        <td>
+          41
+        </td>
+        <td>
+          15
+        </td>
+        <td>
+          1417
+          -
+          1429
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.ISubGoalMessage.goal
+        </td>
+        <td style="background: #AEF1AE">
+          message.goal
+        </td>
+      </tr><tr>
+        <td>
+          44
+        </td>
+        <td>
+          16
+        </td>
+        <td>
+          1506
+          -
+          1573
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          asl.worker.init_1.execute
+        </td>
+        <td style="background: #AEF1AE">
+          worker.this.init_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          17
+        </td>
+        <td>
+          1643
+          -
+          1711
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          asl.worker.token_1.execute
+        </td>
+        <td style="background: #AEF1AE">
+          worker.this.token_1.execute(message.params.asInstanceOf[infrastructure.Parameters])(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          51
+        </td>
+        <td>
+          20
+        </td>
+        <td>
+          1748
+          -
+          1824
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.slf4j.Logger.error
+        </td>
+        <td style="background: #F0ADAD">
+          context.log.error(&quot;This actor can not handle goal of type {}&quot;, message.goal)
+        </td>
+      </tr><tr>
+        <td>
+          51
+        </td>
+        <td>
+          19
+        </td>
+        <td>
+          1811
+          -
+          1823
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.ISubGoalMessage.goal
+        </td>
+        <td style="background: #F0ADAD">
+          message.goal
+        </td>
+      </tr><tr>
+        <td>
+          51
+        </td>
+        <td>
+          18
+        </td>
+        <td>
+          1766
+          -
+          1809
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          &quot;This actor can not handle goal of type {}&quot;
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          23
+        </td>
+        <td>
+          1953
+          -
+          1999
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.AkkaMessageSource.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.AkkaMessageSource.apply(executionContext.agent.self)
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          22
+        </td>
+        <td>
+          1971
+          -
+          1998
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.self
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.agent.self
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          25
+        </td>
+        <td>
+          1924
+          -
+          2000
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](a.src).!(infrastructure.IntentionDoneMessage.apply(infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          21
+        </td>
+        <td>
+          1924
+          -
+          1929
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.AkkaMessageSource.src
+        </td>
+        <td style="background: #AEF1AE">
+          a.src
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          24
+        </td>
+        <td>
+          1932
+          -
+          2000
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.IntentionDoneMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.IntentionDoneMessage.apply(infrastructure.AkkaMessageSource.apply(executionContext.agent.self))
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          26
+        </td>
+        <td>
+          2068
+          -
+          2104
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.slf4j.Logger.error
+        </td>
+        <td style="background: #F0ADAD">
+          context.log.error(&quot;Intention Done!&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          60
+        </td>
+        <td>
+          27
+        </td>
+        <td>
+          2138
+          -
+          2152
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.same
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.same[infrastructure.ISubGoalMessage]
+        </td>
+      </tr><tr>
+        <td>
+          62
+        </td>
+        <td>
+          28
+        </td>
+        <td>
+          2207
+          -
+          2224
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.stopped
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.stopped[infrastructure.ISubGoalMessage]
+        </td>
+      </tr><tr>
+        <td>
+          68
+        </td>
+        <td>
+          31
+        </td>
+        <td>
+          2293
+          -
+          2304
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          asl.worker.Agent.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new worker.this.Agent()
+        </td>
+      </tr><tr>
+        <td>
+          71
+        </td>
+        <td>
+          32
+        </td>
+        <td>
+          2379
+          -
+          2387
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;worker&quot;
+        </td>
+      </tr><tr>
+        <td>
+          73
+        </td>
+        <td>
+          34
+        </td>
+        <td>
+          2409
+          -
+          2417
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.VarMap.apply(bb.expstyla.exp.VarMap.apply$default$1)
+        </td>
+      </tr><tr>
+        <td>
+          73
+        </td>
+        <td>
+          33
+        </td>
+        <td>
+          2409
+          -
+          2409
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply$default$1
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.VarMap.apply$default$1
+        </td>
+      </tr><tr>
+        <td>
+          75
+        </td>
+        <td>
+          35
+        </td>
+        <td>
+          2491
+          -
+          2519
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.immutable.Nil
+        </td>
+        <td style="background: #AEF1AE">
+          scala.collection.immutable.Nil
+        </td>
+      </tr><tr>
+        <td>
+          78
+        </td>
+        <td>
+          36
+        </td>
+        <td>
+          2595
+          -
+          2623
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.immutable.Nil
+        </td>
+        <td style="background: #AEF1AE">
+          scala.collection.immutable.Nil
+        </td>
+      </tr><tr>
+        <td>
+          82
+        </td>
+        <td>
+          43
+        </td>
+        <td>
+          2830
+          -
+          3061
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  val args: infrastructure.Parameters = infrastructure.Parameters.apply(t.terms.toList);
+  scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.init_1, args, ref))
+}
+        </td>
+      </tr><tr>
+        <td>
+          82
+        </td>
+        <td>
+          37
+        </td>
+        <td>
+          2792
+          -
+          2828
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.StructTerm.matchOnlyFunctorAndArity
+        </td>
+        <td style="background: #AEF1AE">
+          t.matchOnlyFunctorAndArity(&quot;init&quot;, 1)
+        </td>
+      </tr><tr>
+        <td>
+          84
+        </td>
+        <td>
+          38
+        </td>
+        <td>
+          2958
+          -
+          2972
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.IterableOnceOps.toList
+        </td>
+        <td style="background: #AEF1AE">
+          t.terms.toList
+        </td>
+      </tr><tr>
+        <td>
+          84
+        </td>
+        <td>
+          39
+        </td>
+        <td>
+          2947
+          -
+          2973
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.Parameters.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.Parameters.apply(t.terms.toList)
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          41
+        </td>
+        <td>
+          3004
+          -
+          3037
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.SubGoalMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.SubGoalMessage.apply(worker.this.init_1, args, ref)
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          40
+        </td>
+        <td>
+          3019
+          -
+          3025
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          asl.worker.init_1
+        </td>
+        <td style="background: #AEF1AE">
+          worker.this.init_1
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          42
+        </td>
+        <td>
+          2997
+          -
+          3038
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Option.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.init_1, args, ref))
+        </td>
+      </tr><tr>
+        <td>
+          86
+        </td>
+        <td>
+          50
+        </td>
+        <td>
+          3109
+          -
+          3342
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  val args: infrastructure.Parameters = infrastructure.Parameters.apply(t.terms.toList);
+  scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.token_1, args, ref))
+}
+        </td>
+      </tr><tr>
+        <td>
+          86
+        </td>
+        <td>
+          53
+        </td>
+        <td>
+          3067
+          -
+          3407
+        </td>
+        <td>
+          If
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          if (t.matchOnlyFunctorAndArity(&quot;token&quot;, 1))
+  {
+    val args: infrastructure.Parameters = infrastructure.Parameters.apply(t.terms.toList);
+    scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.token_1, args, ref))
+  }
+else
+  scala.Option.empty[infrastructure.SubGoalMessage]
+        </td>
+      </tr><tr>
+        <td>
+          86
+        </td>
+        <td>
+          44
+        </td>
+        <td>
+          3070
+          -
+          3107
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.StructTerm.matchOnlyFunctorAndArity
+        </td>
+        <td style="background: #AEF1AE">
+          t.matchOnlyFunctorAndArity(&quot;token&quot;, 1)
+        </td>
+      </tr><tr>
+        <td>
+          88
+        </td>
+        <td>
+          46
+        </td>
+        <td>
+          3227
+          -
+          3253
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.Parameters.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.Parameters.apply(t.terms.toList)
+        </td>
+      </tr><tr>
+        <td>
+          88
+        </td>
+        <td>
+          45
+        </td>
+        <td>
+          3238
+          -
+          3252
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.IterableOnceOps.toList
+        </td>
+        <td style="background: #AEF1AE">
+          t.terms.toList
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          47
+        </td>
+        <td>
+          3299
+          -
+          3306
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          asl.worker.token_1
+        </td>
+        <td style="background: #AEF1AE">
+          worker.this.token_1
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          49
+        </td>
+        <td>
+          3277
+          -
+          3319
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Option.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Option.apply[infrastructure.SubGoalMessage](infrastructure.SubGoalMessage.apply(worker.this.token_1, args, ref))
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          48
+        </td>
+        <td>
+          3284
+          -
+          3318
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.SubGoalMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.SubGoalMessage.apply(worker.this.token_1, args, ref)
+        </td>
+      </tr><tr>
+        <td>
+          91
+        </td>
+        <td>
+          52
+        </td>
+        <td>
+          3364
+          -
+          3392
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          scala.Option.empty
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Option.empty[infrastructure.SubGoalMessage]
+        </td>
+      </tr><tr>
+        <td>
+          91
+        </td>
+        <td>
+          51
+        </td>
+        <td>
+          3364
+          -
+          3392
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          scala.Option.empty
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Option.empty[infrastructure.SubGoalMessage]
+        </td>
+      </tr><tr>
+        <td>
+          96
+        </td>
+        <td>
+          82
+        </td>
+        <td>
+          3537
+          -
+          5888
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.setup
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.setup[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage]) =&gt; {
+  val yp: infrastructure.IYellowPages = yellowPages;
+  val bb: bb.IBeliefBase[bb.expstyla.exp.GenericTerm] = worker.this.beliefBaseFactory.apply();
+  implicit val executionContext: infrastructure.ExecutionContext = infrastructure.ExecutionContext.apply(name, Agent.this.agent_type, context, yp, bb, context.log);
+  bb.assert(Agent.this.initBeliefs()(executionContext));
+  val initiator: akka.actor.typed.ActorRef[infrastructure.ISubGoalMessage] = context.spawn[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext), &quot;initiator&quot;, context.spawn$default$3[Nothing]);
+  typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](MAS).!(infrastructure.ReadyMessage.apply(context.self));
+  akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage], message: infrastructure.IMessage) =&gt; message match {
+    case (): infrastructure.StartMessage() =&gt; {
+      implicit val timeout: akka.util.Timeout = util.this.Timeout.durationToTimeout(scala.concurrent.duration.`package`.DurationInt(99999).seconds);
+      implicit val ec: scala.concurrent.ExecutionContextExecutor = context.executionContext;
+      implicit val scheduler: akka.actor.typed.Scheduler = context.system.scheduler;
+      Agent.this.initGoals()(executionContext).foreach[infrastructure.IMessage](((struct: bb.expstyla.exp.StructTerm) =&gt; {
+        val result: scala.concurrent.Future[infrastructure.IMessage] = akka.actor.typed.scaladsl.AskPattern.Askable[infrastructure.ISubGoalMessage](initiator).ask[infrastructure.IMessage](((ref: akka.actor.typed.ActorRef[infrastructure.IMessage]) =&gt; {
+          val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(struct, infrastructure.AkkaMessageSource.apply(ref))(executionContext);
+          if (subGoal.isDefined)
+            subGoal.get
+          else
+            throw new scala.`package`.RuntimeException((&quot;No plan for initial goal &quot;.+(struct): String))
+        }))(timeout, scheduler);
+        result.onComplete[infrastructure.Message[infrastructure.IMessageSource] with Product with java.io.Serializable](((x0$1: scala.util.Try[infrastructure.IMessage]) =&gt; x0$1 match {
+          case (value: infrastructure.IMessage): scala.util.Success[infrastructure.IMessage]((src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _))) =&gt; infrastructure.IntentionDoneMessage.apply(r)
+          case (exception: Throwable): scala.util.Failure[infrastructure.IMessage](_) =&gt; {
+            &lt;artifact&gt; val x$1: Null(null) = null;
+            &lt;artifact&gt; val x$2: infrastructure.FailureCause = infrastructure.IntentionErrorMessage.apply$default$1;
+            infrastructure.IntentionErrorMessage.apply(x$2, null)
+          }
+        }))(ec);
+        scala.concurrent.Await.result[infrastructure.IMessage](result, timeout.duration)
+      }));
+      typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](initiator).!(infrastructure.InitEndMessage.apply(context.self));
+      Agent.this.normal_behavior()(executionContext)
+    }
+  }))
+}))
+        </td>
+      </tr><tr>
+        <td>
+          98
+        </td>
+        <td>
+          54
+        </td>
+        <td>
+          3662
+          -
+          3681
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.IBeliefBaseFactory.apply
+        </td>
+        <td style="background: #AEF1AE">
+          worker.this.beliefBaseFactory.apply()
+        </td>
+      </tr><tr>
+        <td>
+          99
+        </td>
+        <td>
+          56
+        </td>
+        <td>
+          3797
+          -
+          3808
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.log
+        </td>
+        <td style="background: #AEF1AE">
+          context.log
+        </td>
+      </tr><tr>
+        <td>
+          99
+        </td>
+        <td>
+          55
+        </td>
+        <td>
+          3768
+          -
+          3778
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          asl.worker.Agent.agent_type
+        </td>
+        <td style="background: #AEF1AE">
+          Agent.this.agent_type
+        </td>
+      </tr><tr>
+        <td>
+          99
+        </td>
+        <td>
+          57
+        </td>
+        <td>
+          3745
+          -
+          3809
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.ExecutionContext.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.ExecutionContext.apply(name, Agent.this.agent_type, context, yp, bb, context.log)
+        </td>
+      </tr><tr>
+        <td>
+          100
+        </td>
+        <td>
+          59
+        </td>
+        <td>
+          3823
+          -
+          3845
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.IBeliefBase.assert
+        </td>
+        <td style="background: #AEF1AE">
+          bb.assert(Agent.this.initBeliefs()(executionContext))
+        </td>
+      </tr><tr>
+        <td>
+          100
+        </td>
+        <td>
+          58
+        </td>
+        <td>
+          3833
+          -
+          3844
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          asl.worker.Agent.initBeliefs
+        </td>
+        <td style="background: #AEF1AE">
+          Agent.this.initBeliefs()(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          102
+        </td>
+        <td>
+          62
+        </td>
+        <td>
+          3880
+          -
+          3880
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.spawn$default$3
+        </td>
+        <td style="background: #AEF1AE">
+          context.spawn$default$3[Nothing]
+        </td>
+      </tr><tr>
+        <td>
+          102
+        </td>
+        <td>
+          61
+        </td>
+        <td>
+          3915
+          -
+          3926
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;initiator&quot;
+        </td>
+      </tr><tr>
+        <td>
+          102
+        </td>
+        <td>
+          60
+        </td>
+        <td>
+          3886
+          -
+          3913
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          asl.worker.Intention.apply
+        </td>
+        <td style="background: #AEF1AE">
+          worker.this.Intention.apply(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          102
+        </td>
+        <td>
+          63
+        </td>
+        <td>
+          3872
+          -
+          3927
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.spawn
+        </td>
+        <td style="background: #AEF1AE">
+          context.spawn[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext), &quot;initiator&quot;, context.spawn$default$3[Nothing])
+        </td>
+      </tr><tr>
+        <td>
+          104
+        </td>
+        <td>
+          65
+        </td>
+        <td>
+          3944
+          -
+          3970
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.ReadyMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.ReadyMessage.apply(context.self)
+        </td>
+      </tr><tr>
+        <td>
+          104
+        </td>
+        <td>
+          64
+        </td>
+        <td>
+          3957
+          -
+          3969
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.self
+        </td>
+        <td style="background: #AEF1AE">
+          context.self
+        </td>
+      </tr><tr>
+        <td>
+          104
+        </td>
+        <td>
+          66
+        </td>
+        <td>
+          3938
+          -
+          3970
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](MAS).!(infrastructure.ReadyMessage.apply(context.self))
+        </td>
+      </tr><tr>
+        <td>
+          105
+        </td>
+        <td>
+          81
+        </td>
+        <td>
+          3980
+          -
+          5879
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.receive
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage], message: infrastructure.IMessage) =&gt; message match {
+  case (): infrastructure.StartMessage() =&gt; {
+    implicit val timeout: akka.util.Timeout = util.this.Timeout.durationToTimeout(scala.concurrent.duration.`package`.DurationInt(99999).seconds);
+    implicit val ec: scala.concurrent.ExecutionContextExecutor = context.executionContext;
+    implicit val scheduler: akka.actor.typed.Scheduler = context.system.scheduler;
+    Agent.this.initGoals()(executionContext).foreach[infrastructure.IMessage](((struct: bb.expstyla.exp.StructTerm) =&gt; {
+      val result: scala.concurrent.Future[infrastructure.IMessage] = akka.actor.typed.scaladsl.AskPattern.Askable[infrastructure.ISubGoalMessage](initiator).ask[infrastructure.IMessage](((ref: akka.actor.typed.ActorRef[infrastructure.IMessage]) =&gt; {
+        val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(struct, infrastructure.AkkaMessageSource.apply(ref))(executionContext);
+        if (subGoal.isDefined)
+          subGoal.get
+        else
+          throw new scala.`package`.RuntimeException((&quot;No plan for initial goal &quot;.+(struct): String))
+      }))(timeout, scheduler);
+      result.onComplete[infrastructure.Message[infrastructure.IMessageSource] with Product with java.io.Serializable](((x0$1: scala.util.Try[infrastructure.IMessage]) =&gt; x0$1 match {
+        case (value: infrastructure.IMessage): scala.util.Success[infrastructure.IMessage]((src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _))) =&gt; infrastructure.IntentionDoneMessage.apply(r)
+        case (exception: Throwable): scala.util.Failure[infrastructure.IMessage](_) =&gt; {
+          &lt;artifact&gt; val x$1: Null(null) = null;
+          &lt;artifact&gt; val x$2: infrastructure.FailureCause = infrastructure.IntentionErrorMessage.apply$default$1;
+          infrastructure.IntentionErrorMessage.apply(x$2, null)
+        }
+      }))(ec);
+      scala.concurrent.Await.result[infrastructure.IMessage](result, timeout.duration)
+    }));
+    typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](initiator).!(infrastructure.InitEndMessage.apply(context.self));
+    Agent.this.normal_behavior()(executionContext)
+  }
+}))
+        </td>
+      </tr><tr>
+        <td>
+          111
+        </td>
+        <td>
+          68
+        </td>
+        <td>
+          4151
+          -
+          4164
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.concurrent.duration.DurationConversions.seconds
+        </td>
+        <td style="background: #AEF1AE">
+          scala.concurrent.duration.`package`.DurationInt(99999).seconds
+        </td>
+      </tr><tr>
+        <td>
+          111
+        </td>
+        <td>
+          67
+        </td>
+        <td>
+          4151
+          -
+          4156
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          99999
+        </td>
+      </tr><tr>
+        <td>
+          111
+        </td>
+        <td>
+          69
+        </td>
+        <td>
+          4151
+          -
+          4164
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          akka.util.Timeout.durationToTimeout
+        </td>
+        <td style="background: #AEF1AE">
+          util.this.Timeout.durationToTimeout(scala.concurrent.duration.`package`.DurationInt(99999).seconds)
+        </td>
+      </tr><tr>
+        <td>
+          112
+        </td>
+        <td>
+          70
+        </td>
+        <td>
+          4200
+          -
+          4224
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.executionContext
+        </td>
+        <td style="background: #AEF1AE">
+          context.executionContext
+        </td>
+      </tr><tr>
+        <td>
+          113
+        </td>
+        <td>
+          71
+        </td>
+        <td>
+          4267
+          -
+          4291
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.ActorSystem.scheduler
+        </td>
+        <td style="background: #AEF1AE">
+          context.system.scheduler
+        </td>
+      </tr><tr>
+        <td>
+          117
+        </td>
+        <td>
+          76
+        </td>
+        <td>
+          4432
+          -
+          5558
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.immutable.List.foreach
+        </td>
+        <td style="background: #AEF1AE">
+          Agent.this.initGoals()(executionContext).foreach[infrastructure.IMessage](((struct: bb.expstyla.exp.StructTerm) =&gt; {
+  val result: scala.concurrent.Future[infrastructure.IMessage] = akka.actor.typed.scaladsl.AskPattern.Askable[infrastructure.ISubGoalMessage](initiator).ask[infrastructure.IMessage](((ref: akka.actor.typed.ActorRef[infrastructure.IMessage]) =&gt; {
+    val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(struct, infrastructure.AkkaMessageSource.apply(ref))(executionContext);
+    if (subGoal.isDefined)
+      subGoal.get
+    else
+      throw new scala.`package`.RuntimeException((&quot;No plan for initial goal &quot;.+(struct): String))
+  }))(timeout, scheduler);
+  result.onComplete[infrastructure.Message[infrastructure.IMessageSource] with Product with java.io.Serializable](((x0$1: scala.util.Try[infrastructure.IMessage]) =&gt; x0$1 match {
+    case (value: infrastructure.IMessage): scala.util.Success[infrastructure.IMessage]((src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _))) =&gt; infrastructure.IntentionDoneMessage.apply(r)
+    case (exception: Throwable): scala.util.Failure[infrastructure.IMessage](_) =&gt; {
+      &lt;artifact&gt; val x$1: Null(null) = null;
+      &lt;artifact&gt; val x$2: infrastructure.FailureCause = infrastructure.IntentionErrorMessage.apply$default$1;
+      infrastructure.IntentionErrorMessage.apply(x$2, null)
+    }
+  }))(ec);
+  scala.concurrent.Await.result[infrastructure.IMessage](result, timeout.duration)
+}))
+        </td>
+      </tr><tr>
+        <td>
+          120
+        </td>
+        <td>
+          72
+        </td>
+        <td>
+          4514
+          -
+          4869
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.AskPattern.Askable.ask
+        </td>
+        <td style="background: #F0ADAD">
+          akka.actor.typed.scaladsl.AskPattern.Askable[infrastructure.ISubGoalMessage](initiator).ask[infrastructure.IMessage](((ref: akka.actor.typed.ActorRef[infrastructure.IMessage]) =&gt; {
+  val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(struct, infrastructure.AkkaMessageSource.apply(ref))(executionContext);
+  if (subGoal.isDefined)
+    subGoal.get
+  else
+    throw new scala.`package`.RuntimeException((&quot;No plan for initial goal &quot;.+(struct): String))
+}))(timeout, scheduler)
+        </td>
+      </tr><tr>
+        <td>
+          130
+        </td>
+        <td>
+          73
+        </td>
+        <td>
+          4891
+          -
+          5091
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          scala.concurrent.Future.onComplete
+        </td>
+        <td style="background: #F0ADAD">
+          result.onComplete[infrastructure.Message[infrastructure.IMessageSource] with Product with java.io.Serializable](((x0$1: scala.util.Try[infrastructure.IMessage]) =&gt; x0$1 match {
+  case (value: infrastructure.IMessage): scala.util.Success[infrastructure.IMessage]((src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _))) =&gt; infrastructure.IntentionDoneMessage.apply(r)
+  case (exception: Throwable): scala.util.Failure[infrastructure.IMessage](_) =&gt; {
+    &lt;artifact&gt; val x$1: Null(null) = null;
+    &lt;artifact&gt; val x$2: infrastructure.FailureCause = infrastructure.IntentionErrorMessage.apply$default$1;
+    infrastructure.IntentionErrorMessage.apply(x$2, null)
+  }
+}))(ec)
+        </td>
+      </tr><tr>
+        <td>
+          135
+        </td>
+        <td>
+          74
+        </td>
+        <td>
+          5133
+          -
+          5149
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.util.Timeout.duration
+        </td>
+        <td style="background: #F0ADAD">
+          timeout.duration
+        </td>
+      </tr><tr>
+        <td>
+          135
+        </td>
+        <td>
+          75
+        </td>
+        <td>
+          5112
+          -
+          5150
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.concurrent.Await.result
+        </td>
+        <td style="background: #F0ADAD">
+          scala.concurrent.Await.result[infrastructure.IMessage](result, timeout.duration)
+        </td>
+      </tr><tr>
+        <td>
+          144
+        </td>
+        <td>
+          77
+        </td>
+        <td>
+          5604
+          -
+          5616
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.self
+        </td>
+        <td style="background: #AEF1AE">
+          context.self
+        </td>
+      </tr><tr>
+        <td>
+          144
+        </td>
+        <td>
+          79
+        </td>
+        <td>
+          5577
+          -
+          5617
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](initiator).!(infrastructure.InitEndMessage.apply(context.self))
+        </td>
+      </tr><tr>
+        <td>
+          144
+        </td>
+        <td>
+          78
+        </td>
+        <td>
+          5589
+          -
+          5617
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.InitEndMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.InitEndMessage.apply(context.self)
+        </td>
+      </tr><tr>
+        <td>
+          145
+        </td>
+        <td>
+          80
+        </td>
+        <td>
+          5635
+          -
+          5652
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          asl.worker.Agent.normal_behavior
+        </td>
+        <td style="background: #AEF1AE">
+          Agent.this.normal_behavior()(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          157
+        </td>
+        <td>
+          109
+        </td>
+        <td>
+          6000
+          -
+          7120
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.setup
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.setup[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage]) =&gt; {
+  val pool: akka.actor.typed.scaladsl.PoolRouter[infrastructure.ISubGoalMessage] = akka.actor.typed.scaladsl.Routers.pool[infrastructure.ISubGoalMessage](8)(akka.actor.typed.scaladsl.Behaviors.supervise[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext)).onFailure[Exception](akka.actor.typed.SupervisorStrategy.restart)((ClassTag.apply[Exception](classOf[java.lang.Exception]): scala.reflect.ClassTag[Exception])));
+  val router: akka.actor.typed.ActorRef[infrastructure.ISubGoalMessage] = context.spawn[infrastructure.ISubGoalMessage](pool, &quot;intention-pool&quot;, context.spawn$default$3[Nothing]);
+  akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage], message: infrastructure.IMessage) =&gt; {
+    message match {
+      case (src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _)) =&gt; ()
+      case (p_goal: infrastructure.IGoal, p_params: infrastructure.IParams, p_src: infrastructure.IMessageSource): infrastructure.SubGoalMessage(_, _, _) =&gt; typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](router).!(message.asInstanceOf[infrastructure.SubGoalMessage])
+      case (p_content: Any, src: infrastructure.IMessageSource): infrastructure.GoalMessage((m @ _), (ref @ _)) =&gt; m match {
+        case (t @ (_: bb.expstyla.exp.StructTerm)) =&gt; {
+          val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(t, ref)(executionContext);
+          if (subGoal.isDefined)
+            typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](context.self).!(subGoal.get)
+          else
+            typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](ref.asInstanceOf[infrastructure.AkkaMessageSource].src).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        }
+      }
+    };
+    akka.actor.typed.scaladsl.Behaviors.same[infrastructure.IMessage]
+  }))
+}))
+        </td>
+      </tr><tr>
+        <td>
+          159
+        </td>
+        <td>
+          83
+        </td>
+        <td>
+          6074
+          -
+          6075
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          8
+        </td>
+      </tr><tr>
+        <td>
+          159
+        </td>
+        <td>
+          87
+        </td>
+        <td>
+          6050
+          -
+          6187
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Routers.pool
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Routers.pool[infrastructure.ISubGoalMessage](8)(akka.actor.typed.scaladsl.Behaviors.supervise[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext)).onFailure[Exception](akka.actor.typed.SupervisorStrategy.restart)((ClassTag.apply[Exception](classOf[java.lang.Exception]): scala.reflect.ClassTag[Exception])))
+        </td>
+      </tr><tr>
+        <td>
+          160
+        </td>
+        <td>
+          86
+        </td>
+        <td>
+          6089
+          -
+          6186
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.Supervise.onFailure
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.supervise[infrastructure.ISubGoalMessage](worker.this.Intention.apply(executionContext)).onFailure[Exception](akka.actor.typed.SupervisorStrategy.restart)((ClassTag.apply[Exception](classOf[java.lang.Exception]): scala.reflect.ClassTag[Exception]))
+        </td>
+      </tr><tr>
+        <td>
+          160
+        </td>
+        <td>
+          85
+        </td>
+        <td>
+          6159
+          -
+          6185
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.SupervisorStrategy.restart
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.SupervisorStrategy.restart
+        </td>
+      </tr><tr>
+        <td>
+          160
+        </td>
+        <td>
+          84
+        </td>
+        <td>
+          6109
+          -
+          6136
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          asl.worker.Intention.apply
+        </td>
+        <td style="background: #AEF1AE">
+          worker.this.Intention.apply(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          162
+        </td>
+        <td>
+          89
+        </td>
+        <td>
+          6219
+          -
+          6219
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.spawn$default$3
+        </td>
+        <td style="background: #AEF1AE">
+          context.spawn$default$3[Nothing]
+        </td>
+      </tr><tr>
+        <td>
+          162
+        </td>
+        <td>
+          88
+        </td>
+        <td>
+          6231
+          -
+          6247
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;intention-pool&quot;
+        </td>
+      </tr><tr>
+        <td>
+          162
+        </td>
+        <td>
+          90
+        </td>
+        <td>
+          6211
+          -
+          6248
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.spawn
+        </td>
+        <td style="background: #AEF1AE">
+          context.spawn[infrastructure.ISubGoalMessage](pool, &quot;intention-pool&quot;, context.spawn$default$3[Nothing])
+        </td>
+      </tr><tr>
+        <td>
+          164
+        </td>
+        <td>
+          108
+        </td>
+        <td>
+          6259
+          -
+          7111
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.receive
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.receive[infrastructure.IMessage](((context: akka.actor.typed.scaladsl.ActorContext[infrastructure.IMessage], message: infrastructure.IMessage) =&gt; {
+  message match {
+    case (src: infrastructure.IMessageSource): infrastructure.IntentionDoneMessage((r @ _)) =&gt; ()
+    case (p_goal: infrastructure.IGoal, p_params: infrastructure.IParams, p_src: infrastructure.IMessageSource): infrastructure.SubGoalMessage(_, _, _) =&gt; typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](router).!(message.asInstanceOf[infrastructure.SubGoalMessage])
+    case (p_content: Any, src: infrastructure.IMessageSource): infrastructure.GoalMessage((m @ _), (ref @ _)) =&gt; m match {
+      case (t @ (_: bb.expstyla.exp.StructTerm)) =&gt; {
+        val subGoal: Option[infrastructure.SubGoalMessage] = Agent.this.create_goal_message(t, ref)(executionContext);
+        if (subGoal.isDefined)
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](context.self).!(subGoal.get)
+        else
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](ref.asInstanceOf[infrastructure.AkkaMessageSource].src).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+      }
+    }
+  };
+  akka.actor.typed.scaladsl.Behaviors.same[infrastructure.IMessage]
+}))
+        </td>
+      </tr><tr>
+        <td>
+          167
+        </td>
+        <td>
+          91
+        </td>
+        <td>
+          6385
+          -
+          6387
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          170
+        </td>
+        <td>
+          92
+        </td>
+        <td>
+          6554
+          -
+          6590
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          scala.Any.asInstanceOf
+        </td>
+        <td style="background: #AEF1AE">
+          message.asInstanceOf[infrastructure.SubGoalMessage]
+        </td>
+      </tr><tr>
+        <td>
+          170
+        </td>
+        <td>
+          93
+        </td>
+        <td>
+          6545
+          -
+          6590
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.ISubGoalMessage](router).!(message.asInstanceOf[infrastructure.SubGoalMessage])
+        </td>
+      </tr><tr>
+        <td>
+          174
+        </td>
+        <td>
+          94
+        </td>
+        <td>
+          6737
+          -
+          6764
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          asl.worker.Agent.create_goal_message
+        </td>
+        <td style="background: #AEF1AE">
+          Agent.this.create_goal_message(t, ref)(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          176
+        </td>
+        <td>
+          95
+        </td>
+        <td>
+          6791
+          -
+          6808
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.Option.isDefined
+        </td>
+        <td style="background: #AEF1AE">
+          subGoal.isDefined
+        </td>
+      </tr><tr>
+        <td>
+          177
+        </td>
+        <td>
+          98
+        </td>
+        <td>
+          6833
+          -
+          6859
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](context.self).!(subGoal.get)
+        </td>
+      </tr><tr>
+        <td>
+          177
+        </td>
+        <td>
+          97
+        </td>
+        <td>
+          6848
+          -
+          6859
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.Option.get
+        </td>
+        <td style="background: #AEF1AE">
+          subGoal.get
+        </td>
+      </tr><tr>
+        <td>
+          177
+        </td>
+        <td>
+          96
+        </td>
+        <td>
+          6833
+          -
+          6845
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.self
+        </td>
+        <td style="background: #AEF1AE">
+          context.self
+        </td>
+      </tr><tr>
+        <td>
+          177
+        </td>
+        <td>
+          99
+        </td>
+        <td>
+          6833
+          -
+          6859
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](context.self).!(subGoal.get)
+        </td>
+      </tr><tr>
+        <td>
+          179
+        </td>
+        <td>
+          101
+        </td>
+        <td>
+          6973
+          -
+          6988
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.NoPlanMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.NoPlanMessage.apply()
+        </td>
+      </tr><tr>
+        <td>
+          179
+        </td>
+        <td>
+          104
+        </td>
+        <td>
+          6951
+          -
+          7036
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.IntentionErrorMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self))
+        </td>
+      </tr><tr>
+        <td>
+          179
+        </td>
+        <td>
+          106
+        </td>
+        <td>
+          6909
+          -
+          7036
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](ref.asInstanceOf[infrastructure.AkkaMessageSource].src).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        </td>
+      </tr><tr>
+        <td>
+          179
+        </td>
+        <td>
+          100
+        </td>
+        <td>
+          6909
+          -
+          6948
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.AkkaMessageSource.src
+        </td>
+        <td style="background: #AEF1AE">
+          ref.asInstanceOf[infrastructure.AkkaMessageSource].src
+        </td>
+      </tr><tr>
+        <td>
+          179
+        </td>
+        <td>
+          103
+        </td>
+        <td>
+          6989
+          -
+          7035
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.AkkaMessageSource.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.AkkaMessageSource.apply(executionContext.agent.self)
+        </td>
+      </tr><tr>
+        <td>
+          179
+        </td>
+        <td>
+          105
+        </td>
+        <td>
+          6909
+          -
+          7036
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](ref.asInstanceOf[infrastructure.AkkaMessageSource].src).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoPlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        </td>
+      </tr><tr>
+        <td>
+          179
+        </td>
+        <td>
+          102
+        </td>
+        <td>
+          7007
+          -
+          7034
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.self
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.agent.self
+        </td>
+      </tr><tr>
+        <td>
+          184
+        </td>
+        <td>
+          107
+        </td>
+        <td>
+          7086
+          -
+          7100
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.Behaviors.same
+        </td>
+        <td style="background: #AEF1AE">
+          akka.actor.typed.scaladsl.Behaviors.same[infrastructure.IMessage]
+        </td>
+      </tr><tr>
+        <td>
+          193
+        </td>
+        <td>
+          110
+        </td>
+        <td>
+          7288
+          -
+          7288
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply$default$1
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.VarMap.apply$default$1
+        </td>
+      </tr><tr>
+        <td>
+          193
+        </td>
+        <td>
+          111
+        </td>
+        <td>
+          7288
+          -
+          7296
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.VarMap.apply(bb.expstyla.exp.VarMap.apply$default$1)
+        </td>
+      </tr><tr>
+        <td>
+          196
+        </td>
+        <td>
+          112
+        </td>
+        <td>
+          7355
+          -
+          7367
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.clear
+        </td>
+        <td style="background: #AEF1AE">
+          vars.clear()
+        </td>
+      </tr><tr>
+        <td>
+          197
+        </td>
+        <td>
+          113
+        </td>
+        <td>
+          7404
+          -
+          7414
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;NThreads&quot;
+        </td>
+      </tr><tr>
+        <td>
+          197
+        </td>
+        <td>
+          116
+        </td>
+        <td>
+          7393
+          -
+          7437
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.+=
+        </td>
+        <td style="background: #AEF1AE">
+          vars.+=(scala.Predef.ArrowAssoc[String](&quot;NThreads&quot;).-&gt;[bb.expstyla.exp.GenericTerm](params.l_params.apply(0)))
+        </td>
+      </tr><tr>
+        <td>
+          197
+        </td>
+        <td>
+          115
+        </td>
+        <td>
+          7404
+          -
+          7436
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.ArrowAssoc.-&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.ArrowAssoc[String](&quot;NThreads&quot;).-&gt;[bb.expstyla.exp.GenericTerm](params.l_params.apply(0))
+        </td>
+      </tr><tr>
+        <td>
+          197
+        </td>
+        <td>
+          114
+        </td>
+        <td>
+          7418
+          -
+          7436
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.LinearSeqOps.apply
+        </td>
+        <td style="background: #AEF1AE">
+          params.l_params.apply(0)
+        </td>
+      </tr><tr>
+        <td>
+          199
+        </td>
+        <td>
+          119
+        </td>
+        <td>
+          7556
+          -
+          7566
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.IntTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.IntTerm.apply(1)
+        </td>
+      </tr><tr>
+        <td>
+          199
+        </td>
+        <td>
+          122
+        </td>
+        <td>
+          7473
+          -
+          7569
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.IBeliefBase.query
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.beliefBase.query(bb.expstyla.exp.StructTerm.apply(&quot;&gt;&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply(&quot;NThreads&quot;), bb.expstyla.exp.IntTerm.apply(1))))
+        </td>
+      </tr><tr>
+        <td>
+          199
+        </td>
+        <td>
+          118
+        </td>
+        <td>
+          7539
+          -
+          7555
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply
+        </td>
+        <td style="background: #AEF1AE">
+          vars.apply(&quot;NThreads&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          199
+        </td>
+        <td>
+          121
+        </td>
+        <td>
+          7507
+          -
+          7568
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.StructTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.StructTerm.apply(&quot;&gt;&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply(&quot;NThreads&quot;), bb.expstyla.exp.IntTerm.apply(1)))
+        </td>
+      </tr><tr>
+        <td>
+          199
+        </td>
+        <td>
+          120
+        </td>
+        <td>
+          7522
+          -
+          7567
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.SeqFactory.Delegate.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply(&quot;NThreads&quot;), bb.expstyla.exp.IntTerm.apply(1))
+        </td>
+      </tr><tr>
+        <td>
+          199
+        </td>
+        <td>
+          117
+        </td>
+        <td>
+          7518
+          -
+          7521
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;&gt;&quot;
+        </td>
+      </tr><tr>
+        <td>
+          201
+        </td>
+        <td>
+          131
+        </td>
+        <td>
+          7596
+          -
+          7596
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          201
+        </td>
+        <td>
+          130
+        </td>
+        <td>
+          7611
+          -
+          7828
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  r0.bindings.foreach[bb.expstyla.exp.VarMap](((x0$1: (String, bb.expstyla.exp.GenericTerm)) =&gt; x0$1 match {
+    case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) =&gt; vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+  }));
+  init_1.this.plan0(vars)(executionContext);
+  return ()
+}
+        </td>
+      </tr><tr>
+        <td>
+          201
+        </td>
+        <td>
+          132
+        </td>
+        <td>
+          7596
+          -
+          7596
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          201
+        </td>
+        <td>
+          123
+        </td>
+        <td>
+          7600
+          -
+          7609
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.QueryResponse.result
+        </td>
+        <td style="background: #AEF1AE">
+          r0.result
+        </td>
+      </tr><tr>
+        <td>
+          202
+        </td>
+        <td>
+          125
+        </td>
+        <td>
+          7688
+          -
+          7720
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.ArrowAssoc.-&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm])
+        </td>
+      </tr><tr>
+        <td>
+          202
+        </td>
+        <td>
+          124
+        </td>
+        <td>
+          7693
+          -
+          7720
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          scala.Any.asInstanceOf
+        </td>
+        <td style="background: #F0ADAD">
+          v.asInstanceOf[bb.expstyla.exp.GenericTerm]
+        </td>
+      </tr><tr>
+        <td>
+          202
+        </td>
+        <td>
+          127
+        </td>
+        <td>
+          7642
+          -
+          7723
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.IterableOnceOps.foreach
+        </td>
+        <td style="background: #AEF1AE">
+          r0.bindings.foreach[bb.expstyla.exp.VarMap](((x0$1: (String, bb.expstyla.exp.GenericTerm)) =&gt; x0$1 match {
+  case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) =&gt; vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+}))
+        </td>
+      </tr><tr>
+        <td>
+          202
+        </td>
+        <td>
+          126
+        </td>
+        <td>
+          7679
+          -
+          7721
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.+=
+        </td>
+        <td style="background: #F0ADAD">
+          vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+        </td>
+      </tr><tr>
+        <td>
+          203
+        </td>
+        <td>
+          128
+        </td>
+        <td>
+          7753
+          -
+          7764
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          asl.worker.init_1.plan0
+        </td>
+        <td style="background: #AEF1AE">
+          init_1.this.plan0(vars)(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          204
+        </td>
+        <td>
+          129
+        </td>
+        <td>
+          7794
+          -
+          7800
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          210
+        </td>
+        <td>
+          137
+        </td>
+        <td>
+          7950
+          -
+          8045
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.IntentionErrorMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.IntentionErrorMessage.apply(infrastructure.NoApplicablePlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self))
+        </td>
+      </tr><tr>
+        <td>
+          210
+        </td>
+        <td>
+          134
+        </td>
+        <td>
+          7972
+          -
+          7997
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.NoApplicablePlanMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.NoApplicablePlanMessage.apply()
+        </td>
+      </tr><tr>
+        <td>
+          210
+        </td>
+        <td>
+          133
+        </td>
+        <td>
+          7885
+          -
+          7947
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.AkkaMessageSource.address
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.src.asInstanceOf[infrastructure.AkkaMessageSource].address()
+        </td>
+      </tr><tr>
+        <td>
+          210
+        </td>
+        <td>
+          136
+        </td>
+        <td>
+          7998
+          -
+          8044
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.AkkaMessageSource.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.AkkaMessageSource.apply(executionContext.agent.self)
+        </td>
+      </tr><tr>
+        <td>
+          210
+        </td>
+        <td>
+          138
+        </td>
+        <td>
+          7885
+          -
+          8045
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](executionContext.src.asInstanceOf[infrastructure.AkkaMessageSource].address()).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoApplicablePlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        </td>
+      </tr><tr>
+        <td>
+          210
+        </td>
+        <td>
+          135
+        </td>
+        <td>
+          8016
+          -
+          8043
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.self
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.agent.self
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          146
+        </td>
+        <td>
+          8249
+          -
+          8324
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.StringOps.toInt
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;)), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;&quot;)))).toInt
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          140
+        </td>
+        <td>
+          8233
+          -
+          8241
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;thread&quot;
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          149
+        </td>
+        <td>
+          8248
+          -
+          8358
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.GenericTerm.+
+        </td>
+        <td style="background: #AEF1AE">
+          std.converters.Native2Term(scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;)), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;&quot;)))).toInt).%(vars.apply(&quot;NThreads&quot;)).+(bb.expstyla.exp.IntTerm.apply(1))
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          142
+        </td>
+        <td>
+          8282
+          -
+          8302
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          std.converters.Term2String
+        </td>
+        <td style="background: #AEF1AE">
+          std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;))
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          151
+        </td>
+        <td>
+          8213
+          -
+          8361
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.ArrowAssoc.-&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.ArrowAssoc[String](&quot;N&quot;).-&gt;[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;).+(std.converters.Native2Term(scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;)), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;&quot;)))).toInt).%(vars.apply(&quot;NThreads&quot;)).+(bb.expstyla.exp.IntTerm.apply(1))))
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          145
+        </td>
+        <td>
+          8249
+          -
+          8318
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.String.replaceAll
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;)), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;&quot;)))
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          139
+        </td>
+        <td>
+          8213
+          -
+          8216
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;N&quot;
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          148
+        </td>
+        <td>
+          8348
+          -
+          8358
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.IntTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.IntTerm.apply(1)
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          147
+        </td>
+        <td>
+          8327
+          -
+          8343
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply
+        </td>
+        <td style="background: #AEF1AE">
+          vars.apply(&quot;NThreads&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          150
+        </td>
+        <td>
+          8222
+          -
+          8359
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.GenericTerm.+
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;).+(std.converters.Native2Term(scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;)), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;&quot;)))).toInt).%(vars.apply(&quot;NThreads&quot;)).+(bb.expstyla.exp.IntTerm.apply(1)))
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          141
+        </td>
+        <td>
+          8282
+          -
+          8302
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.StringTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          144
+        </td>
+        <td>
+          8303
+          -
+          8317
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          std.converters.Term2String
+        </td>
+        <td style="background: #AEF1AE">
+          std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;&quot;))
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          152
+        </td>
+        <td>
+          8204
+          -
+          8363
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.+=
+        </td>
+        <td style="background: #AEF1AE">
+          vars.+=(scala.Predef.ArrowAssoc[String](&quot;N&quot;).-&gt;[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;).+(std.converters.Native2Term(scala.Predef.augmentString(executionContext.name.replaceAll(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;thread&quot;)), std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;&quot;)))).toInt).%(vars.apply(&quot;NThreads&quot;)).+(bb.expstyla.exp.IntTerm.apply(1)))))
+        </td>
+      </tr><tr>
+        <td>
+          217
+        </td>
+        <td>
+          143
+        </td>
+        <td>
+          8303
+          -
+          8317
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.StringTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.StringTerm.apply(&quot;&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          218
+        </td>
+        <td>
+          154
+        </td>
+        <td>
+          8433
+          -
+          8433
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          218
+        </td>
+        <td>
+          153
+        </td>
+        <td>
+          8407
+          -
+          8521
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          infrastructure.BeliefUpdateAction.execute
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.BeliefUpdateAction.execute(infrastructure.BeliefUpdateAction.Parameters.apply(&quot;+&quot;, bb.expstyla.exp.StructTerm.apply(&quot;neighbor&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply(&quot;N&quot;)))))(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          229
+        </td>
+        <td>
+          155
+        </td>
+        <td>
+          8713
+          -
+          8713
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply$default$1
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.VarMap.apply$default$1
+        </td>
+      </tr><tr>
+        <td>
+          229
+        </td>
+        <td>
+          156
+        </td>
+        <td>
+          8713
+          -
+          8721
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.VarMap.apply(bb.expstyla.exp.VarMap.apply$default$1)
+        </td>
+      </tr><tr>
+        <td>
+          232
+        </td>
+        <td>
+          157
+        </td>
+        <td>
+          8780
+          -
+          8792
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.clear
+        </td>
+        <td style="background: #AEF1AE">
+          vars.clear()
+        </td>
+      </tr><tr>
+        <td>
+          233
+        </td>
+        <td>
+          158
+        </td>
+        <td>
+          8827
+          -
+          8830
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;0&quot;
+        </td>
+      </tr><tr>
+        <td>
+          233
+        </td>
+        <td>
+          160
+        </td>
+        <td>
+          8827
+          -
+          8852
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.ArrowAssoc.-&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.ArrowAssoc[String](&quot;0&quot;).-&gt;[bb.expstyla.exp.GenericTerm](params.l_params.apply(0))
+        </td>
+      </tr><tr>
+        <td>
+          233
+        </td>
+        <td>
+          159
+        </td>
+        <td>
+          8834
+          -
+          8852
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.LinearSeqOps.apply
+        </td>
+        <td style="background: #AEF1AE">
+          params.l_params.apply(0)
+        </td>
+      </tr><tr>
+        <td>
+          233
+        </td>
+        <td>
+          161
+        </td>
+        <td>
+          8818
+          -
+          8853
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.+=
+        </td>
+        <td style="background: #AEF1AE">
+          vars.+=(scala.Predef.ArrowAssoc[String](&quot;0&quot;).-&gt;[bb.expstyla.exp.GenericTerm](params.l_params.apply(0)))
+        </td>
+      </tr><tr>
+        <td>
+          235
+        </td>
+        <td>
+          164
+        </td>
+        <td>
+          8947
+          -
+          8975
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.SeqFactory.Delegate.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.IntTerm.apply(0))
+        </td>
+      </tr><tr>
+        <td>
+          235
+        </td>
+        <td>
+          167
+        </td>
+        <td>
+          8996
+          -
+          9011
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.Parameters.l_params
+        </td>
+        <td style="background: #AEF1AE">
+          params.l_params
+        </td>
+      </tr><tr>
+        <td>
+          235
+        </td>
+        <td>
+          166
+        </td>
+        <td>
+          8988
+          -
+          8995
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;token&quot;
+        </td>
+      </tr><tr>
+        <td>
+          235
+        </td>
+        <td>
+          169
+        </td>
+        <td>
+          8889
+          -
+          9013
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.IBeliefBase.matchTerms
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.beliefBase.matchTerms(bb.expstyla.exp.StructTerm.apply(&quot;token&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.IntTerm.apply(0))), bb.expstyla.exp.StructTerm.apply(&quot;token&quot;, params.l_params))
+        </td>
+      </tr><tr>
+        <td>
+          235
+        </td>
+        <td>
+          163
+        </td>
+        <td>
+          8964
+          -
+          8974
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.IntTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.IntTerm.apply(0)
+        </td>
+      </tr><tr>
+        <td>
+          235
+        </td>
+        <td>
+          165
+        </td>
+        <td>
+          8928
+          -
+          8976
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.StructTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.StructTerm.apply(&quot;token&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](bb.expstyla.exp.IntTerm.apply(0)))
+        </td>
+      </tr><tr>
+        <td>
+          235
+        </td>
+        <td>
+          168
+        </td>
+        <td>
+          8977
+          -
+          9012
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.StructTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.StructTerm.apply(&quot;token&quot;, params.l_params)
+        </td>
+      </tr><tr>
+        <td>
+          235
+        </td>
+        <td>
+          162
+        </td>
+        <td>
+          8939
+          -
+          8946
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;token&quot;
+        </td>
+      </tr><tr>
+        <td>
+          236
+        </td>
+        <td>
+          178
+        </td>
+        <td>
+          9040
+          -
+          9040
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          236
+        </td>
+        <td>
+          179
+        </td>
+        <td>
+          9040
+          -
+          9040
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          236
+        </td>
+        <td>
+          170
+        </td>
+        <td>
+          9043
+          -
+          9052
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.QueryResponse.result
+        </td>
+        <td style="background: #AEF1AE">
+          m0.result
+        </td>
+      </tr><tr>
+        <td>
+          237
+        </td>
+        <td>
+          177
+        </td>
+        <td>
+          9079
+          -
+          9294
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  m0.bindings.foreach[bb.expstyla.exp.VarMap](((x0$1: (String, bb.expstyla.exp.GenericTerm)) =&gt; x0$1 match {
+    case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) =&gt; vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+  }));
+  token_1.this.plan0(vars)(executionContext);
+  return ()
+}
+        </td>
+      </tr><tr>
+        <td>
+          238
+        </td>
+        <td>
+          173
+        </td>
+        <td>
+          9144
+          -
+          9186
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.+=
+        </td>
+        <td style="background: #F0ADAD">
+          vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+        </td>
+      </tr><tr>
+        <td>
+          238
+        </td>
+        <td>
+          172
+        </td>
+        <td>
+          9153
+          -
+          9185
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.ArrowAssoc.-&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm])
+        </td>
+      </tr><tr>
+        <td>
+          238
+        </td>
+        <td>
+          174
+        </td>
+        <td>
+          9107
+          -
+          9188
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.IterableOnceOps.foreach
+        </td>
+        <td style="background: #AEF1AE">
+          m0.bindings.foreach[bb.expstyla.exp.VarMap](((x0$1: (String, bb.expstyla.exp.GenericTerm)) =&gt; x0$1 match {
+  case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) =&gt; vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+}))
+        </td>
+      </tr><tr>
+        <td>
+          238
+        </td>
+        <td>
+          171
+        </td>
+        <td>
+          9158
+          -
+          9185
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          scala.Any.asInstanceOf
+        </td>
+        <td style="background: #F0ADAD">
+          v.asInstanceOf[bb.expstyla.exp.GenericTerm]
+        </td>
+      </tr><tr>
+        <td>
+          240
+        </td>
+        <td>
+          175
+        </td>
+        <td>
+          9219
+          -
+          9230
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          asl.worker.token_1.plan0
+        </td>
+        <td style="background: #AEF1AE">
+          token_1.this.plan0(vars)(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          241
+        </td>
+        <td>
+          176
+        </td>
+        <td>
+          9260
+          -
+          9266
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          246
+        </td>
+        <td>
+          180
+        </td>
+        <td>
+          9393
+          -
+          9405
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.clear
+        </td>
+        <td style="background: #AEF1AE">
+          vars.clear()
+        </td>
+      </tr><tr>
+        <td>
+          247
+        </td>
+        <td>
+          182
+        </td>
+        <td>
+          9449
+          -
+          9467
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.LinearSeqOps.apply
+        </td>
+        <td style="background: #AEF1AE">
+          params.l_params.apply(0)
+        </td>
+      </tr><tr>
+        <td>
+          247
+        </td>
+        <td>
+          184
+        </td>
+        <td>
+          9431
+          -
+          9468
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.+=
+        </td>
+        <td style="background: #AEF1AE">
+          vars.+=(scala.Predef.ArrowAssoc[String](&quot;T&quot;).-&gt;[bb.expstyla.exp.GenericTerm](params.l_params.apply(0)))
+        </td>
+      </tr><tr>
+        <td>
+          247
+        </td>
+        <td>
+          181
+        </td>
+        <td>
+          9442
+          -
+          9445
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;T&quot;
+        </td>
+      </tr><tr>
+        <td>
+          247
+        </td>
+        <td>
+          183
+        </td>
+        <td>
+          9442
+          -
+          9467
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.ArrowAssoc.-&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.ArrowAssoc[String](&quot;T&quot;).-&gt;[bb.expstyla.exp.GenericTerm](params.l_params.apply(0))
+        </td>
+      </tr><tr>
+        <td>
+          249
+        </td>
+        <td>
+          185
+        </td>
+        <td>
+          9549
+          -
+          9559
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;neighbor&quot;
+        </td>
+      </tr><tr>
+        <td>
+          249
+        </td>
+        <td>
+          187
+        </td>
+        <td>
+          9560
+          -
+          9587
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.SeqFactory.Delegate.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply(&quot;N&quot;))
+        </td>
+      </tr><tr>
+        <td>
+          249
+        </td>
+        <td>
+          189
+        </td>
+        <td>
+          9504
+          -
+          9589
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.IBeliefBase.query
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.beliefBase.query(bb.expstyla.exp.StructTerm.apply(&quot;neighbor&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply(&quot;N&quot;))))
+        </td>
+      </tr><tr>
+        <td>
+          249
+        </td>
+        <td>
+          186
+        </td>
+        <td>
+          9577
+          -
+          9586
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.apply
+        </td>
+        <td style="background: #AEF1AE">
+          vars.apply(&quot;N&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          249
+        </td>
+        <td>
+          188
+        </td>
+        <td>
+          9538
+          -
+          9588
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.StructTerm.apply
+        </td>
+        <td style="background: #AEF1AE">
+          bb.expstyla.exp.StructTerm.apply(&quot;neighbor&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply(&quot;N&quot;)))
+        </td>
+      </tr><tr>
+        <td>
+          251
+        </td>
+        <td>
+          199
+        </td>
+        <td>
+          9616
+          -
+          9616
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          251
+        </td>
+        <td>
+          190
+        </td>
+        <td>
+          9620
+          -
+          9629
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          infrastructure.QueryResponse.result
+        </td>
+        <td style="background: #AEF1AE">
+          r1.result
+        </td>
+      </tr><tr>
+        <td>
+          251
+        </td>
+        <td>
+          198
+        </td>
+        <td>
+          9616
+          -
+          9616
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          251
+        </td>
+        <td>
+          197
+        </td>
+        <td>
+          9631
+          -
+          9848
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  r1.bindings.foreach[bb.expstyla.exp.VarMap](((x0$2: (String, bb.expstyla.exp.GenericTerm)) =&gt; x0$2 match {
+    case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) =&gt; vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+  }));
+  token_1.this.plan1(vars)(executionContext);
+  return ()
+}
+        </td>
+      </tr><tr>
+        <td>
+          252
+        </td>
+        <td>
+          191
+        </td>
+        <td>
+          9713
+          -
+          9740
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          scala.Any.asInstanceOf
+        </td>
+        <td style="background: #AEF1AE">
+          v.asInstanceOf[bb.expstyla.exp.GenericTerm]
+        </td>
+      </tr><tr>
+        <td>
+          252
+        </td>
+        <td>
+          194
+        </td>
+        <td>
+          9662
+          -
+          9743
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.IterableOnceOps.foreach
+        </td>
+        <td style="background: #AEF1AE">
+          r1.bindings.foreach[bb.expstyla.exp.VarMap](((x0$2: (String, bb.expstyla.exp.GenericTerm)) =&gt; x0$2 match {
+  case (_1: String, _2: bb.expstyla.exp.GenericTerm): (String, bb.expstyla.exp.GenericTerm)((k @ _), (v @ _)) =&gt; vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+}))
+        </td>
+      </tr><tr>
+        <td>
+          252
+        </td>
+        <td>
+          193
+        </td>
+        <td>
+          9699
+          -
+          9741
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          bb.expstyla.exp.VarMap.+=
+        </td>
+        <td style="background: #AEF1AE">
+          vars.+=(scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm]))
+        </td>
+      </tr><tr>
+        <td>
+          252
+        </td>
+        <td>
+          192
+        </td>
+        <td>
+          9708
+          -
+          9740
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.ArrowAssoc.-&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.ArrowAssoc[String](k).-&gt;[bb.expstyla.exp.GenericTerm](v.asInstanceOf[bb.expstyla.exp.GenericTerm])
+        </td>
+      </tr><tr>
+        <td>
+          253
+        </td>
+        <td>
+          195
+        </td>
+        <td>
+          9773
+          -
+          9784
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          asl.worker.token_1.plan1
+        </td>
+        <td style="background: #AEF1AE">
+          token_1.this.plan1(vars)(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          254
+        </td>
+        <td>
+          196
+        </td>
+        <td>
+          9814
+          -
+          9820
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          260
+        </td>
+        <td>
+          200
+        </td>
+        <td>
+          9905
+          -
+          9967
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.AkkaMessageSource.address
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.src.asInstanceOf[infrastructure.AkkaMessageSource].address()
+        </td>
+      </tr><tr>
+        <td>
+          260
+        </td>
+        <td>
+          202
+        </td>
+        <td>
+          10036
+          -
+          10063
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.typed.scaladsl.ActorContext.self
+        </td>
+        <td style="background: #AEF1AE">
+          executionContext.agent.self
+        </td>
+      </tr><tr>
+        <td>
+          260
+        </td>
+        <td>
+          205
+        </td>
+        <td>
+          9905
+          -
+          10065
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.typed.ActorRef.ActorRefOps.!
+        </td>
+        <td style="background: #AEF1AE">
+          typed.this.ActorRef.ActorRefOps[infrastructure.IMessage](executionContext.src.asInstanceOf[infrastructure.AkkaMessageSource].address()).!(infrastructure.IntentionErrorMessage.apply(infrastructure.NoApplicablePlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self)))
+        </td>
+      </tr><tr>
+        <td>
+          260
+        </td>
+        <td>
+          201
+        </td>
+        <td>
+          9992
+          -
+          10017
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.NoApplicablePlanMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.NoApplicablePlanMessage.apply()
+        </td>
+      </tr><tr>
+        <td>
+          260
+        </td>
+        <td>
+          204
+        </td>
+        <td>
+          9970
+          -
+          10065
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.IntentionErrorMessage.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.IntentionErrorMessage.apply(infrastructure.NoApplicablePlanMessage.apply(), infrastructure.AkkaMessageSource.apply(executionContext.agent.self))
+        </td>
+      </tr><tr>
+        <td>
+          260
+        </td>
+        <td>
+          203
+        </td>
+        <td>
+          10018
+          -
+          10064
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          infrastructure.AkkaMessageSource.apply
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.AkkaMessageSource.apply(executionContext.agent.self)
+        </td>
+      </tr><tr>
+        <td>
+          267
+        </td>
+        <td>
+          206
+        </td>
+        <td>
+          10223
+          -
+          10354
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          infrastructure.PrimitiveAction.execute
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.PrimitiveAction.execute(infrastructure.PrimitiveAction.Parameters.apply((() =&gt; {
+  worker.this.coms.achieve(std.converters.Term2String(bb.expstyla.exp.StringTerm.apply(&quot;master&quot;)), bb.expstyla.exp.StructTerm.apply(&quot;done&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm]()))(executionContext);
+  ()
+})))(executionContext)
+        </td>
+      </tr><tr>
+        <td>
+          273
+        </td>
+        <td>
+          207
+        </td>
+        <td>
+          10524
+          -
+          10671
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          infrastructure.PrimitiveAction.execute
+        </td>
+        <td style="background: #AEF1AE">
+          infrastructure.PrimitiveAction.execute(infrastructure.PrimitiveAction.Parameters.apply((() =&gt; {
+  worker.this.coms.achieve(std.converters.Term2String(vars.apply(&quot;N&quot;)), bb.expstyla.exp.StructTerm.apply(&quot;token&quot;, scala.collection.immutable.Seq.apply[bb.expstyla.exp.GenericTerm](vars.apply(&quot;T&quot;).-(bb.expstyla.exp.IntTerm.apply(1)))))(executionContext);
+  ()
+})))(executionContext)
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>
